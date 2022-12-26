@@ -10,3 +10,7 @@ const green = Color(0xFFB2FF59);
 const orange = Color(0xFFFF5722);
 const red = Color.fromARGB(255, 255, 0, 0);
 // const poppin = TextStyle(fontFamily: 'poppins');
+const textType = TextStyle(
+  fontSize: 25,
+  fontWeight: FontWeight.bold,
+);
