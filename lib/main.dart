@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:qr_scanner/const.dart';
 import 'package:qr_scanner/bottomNavigator/create.dart';
 import 'package:qr_scanner/bottomNavigator/favorite.dart';
 import 'package:qr_scanner/bottomNavigator/history.dart';
 import 'package:qr_scanner/bottomNavigator/home_page.dart';
 import 'package:qr_scanner/bottomNavigator/setting.dart';
+import 'package:qr_scanner/them_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,13 +20,22 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MainPage(),
-    );
-  }
+  Widget build(BuildContext context) => ChangeNotifierProvider(
+        create: (context) => ThemeProvider(),
+        builder: (context, _) {
+          final themeProvider = Provider.of<ThemeProvider>(context);
+
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            themeMode: themeProvider.themeMode,
+            theme: MyThemes.lightTheme,
+            darkTheme: MyThemes.darkTheme,
+            home: MainPage(),
+          );
+        },
+      );
 }
 
 class MainPage extends StatefulWidget {
@@ -41,7 +52,6 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: white,
       body: PageStorage(
         bucket: _pageStorageBucket,
         child: SafeArea(child: currenScreen),
@@ -87,8 +97,8 @@ class _MainPageState extends State<MainPage> {
                         Text(
                           'History',
                           style: TextStyle(
-                              color: currentIndex == 1
-                                  ? blue : grey,),
+                            color: currentIndex == 1 ? blue : grey,
+                          ),
                         )
                       ],
                     ),
@@ -111,8 +121,8 @@ class _MainPageState extends State<MainPage> {
                         Text(
                           'Create',
                           style: TextStyle(
-                              color: currentIndex == 2
-                                  ? blue : grey,),
+                            color: currentIndex == 2 ? blue : grey,
+                          ),
                         )
                       ],
                     ),
@@ -140,8 +150,8 @@ class _MainPageState extends State<MainPage> {
                         Text(
                           'Favorite',
                           style: TextStyle(
-                              color: currentIndex == 3
-                                  ? blue : grey,),
+                            color: currentIndex == 3 ? blue : grey,
+                          ),
                         )
                       ],
                     ),
@@ -164,8 +174,8 @@ class _MainPageState extends State<MainPage> {
                         Text(
                           'Setting',
                           style: TextStyle(
-                              color: currentIndex == 4
-                                  ? blue : grey,),
+                            color: currentIndex == 4 ? blue : grey,
+                          ),
                         )
                       ],
                     ),
@@ -177,6 +187,5 @@ class _MainPageState extends State<MainPage> {
         ),
       ),
     );
-    
   }
 }
