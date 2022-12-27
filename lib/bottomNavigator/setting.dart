@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 
 import '../const.dart';
@@ -12,7 +13,20 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
-  bool valueDark = false;
+  final switchData = GetStorage();
+  bool isSwitched = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (switchData.read('isSwitched') != null) {
+      setState(() {
+        isSwitched = switchData.read('isSwitched');
+        print(isSwitched);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
@@ -55,12 +69,18 @@ class _SettingPageState extends State<SettingPage> {
                       ],
                     ),
                     Switch.adaptive(
-                        value: themeProvider.isDarkMode,
+                        value: isSwitched,
                         onChanged: (value) {
                           setState(() {
+                            // isSwitched = themeProvider.isDarkMode;
+                            isSwitched = value;
+
                             final provider = Provider.of<ThemeProvider>(context,
                                 listen: false);
                             provider.toggleTheme(value);
+
+                            switchData.write(
+                                'isSwitched', isSwitched);
                           });
                         }),
                   ],

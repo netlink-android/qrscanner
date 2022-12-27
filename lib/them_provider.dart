@@ -1,21 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:qr_scanner/const.dart';
 
 class ThemeProvider extends ChangeNotifier {
-  ThemeMode themeMode = ThemeMode.system;
+  bool theme = false;
+  final switchData = GetStorage();
 
-  bool get isDarkMode {
-    if (themeMode == ThemeMode.system) {
-      final brightness = SchedulerBinding.instance.window.platformBrightness;
-      return brightness == Brightness.dark;
+  bool statte = true;
+  ThemeMode get themeMode {
+    // if (themeMode == ThemeMode.system) {
+    //   final brightness = SchedulerBinding.instance.window.platformBrightness;
+    //   return brightness == Brightness.dark;
+    // } else {
+    //   return themeMode == ThemeMode.dark;
+    // }
+    if (switchData.read('isSwitched') != null) {
+       theme = switchData.read('isSwitched');
+      if (theme) {
+        return ThemeMode.dark;
+      } else {
+        return ThemeMode.light;
+      }
     } else {
-      return themeMode == ThemeMode.dark;
+      return ThemeMode.light;
     }
   }
 
   void toggleTheme(bool isOn) {
-    themeMode = isOn ? ThemeMode.dark : ThemeMode.light;
+    // if (switchData.read('isSwitched') != null) {
+    //   isOn = switchData.read('isSwitched');
+    // }
+    theme = isOn;
     notifyListeners();
   }
 }

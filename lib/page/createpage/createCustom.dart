@@ -21,7 +21,7 @@ class _CreateCustomPageState extends State<CreateCustomPage> {
           height: 70,
           width: 70,
           decoration: BoxDecoration(
-            color: grey.withOpacity(0.5),
+            color: blue.withOpacity(0.6),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Padding(
@@ -33,6 +33,7 @@ class _CreateCustomPageState extends State<CreateCustomPage> {
                 child: Image.asset('assets/iconcustom/' + widget.icontype)),
           ),
         ),
+        SizedBox(height: 5,),
         Text(
           widget.type,
           style: textType.copyWith(fontSize: 18, fontWeight: FontWeight.normal),

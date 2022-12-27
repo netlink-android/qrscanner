@@ -85,8 +85,13 @@ class _ScanQrPageState extends State<ScanQrPage> {
           ),
           Expanded(
             flex: 4,
+            
             child: Stack(
               children: [
+                 QRScannerOverlay(
+                  overlayColour: Colors.black,
+                  zoom: zoom,
+                ),
                 MobileScanner(
                     controller: controller,
                     // fit: FittedSizes,
@@ -109,7 +114,7 @@ class _ScanQrPageState extends State<ScanQrPage> {
                       }
                     }),
                 QRScannerOverlay(
-                  overlayColour: Colors.black.withOpacity(0.8),
+                  overlayColour: Colors.black.withOpacity(1),
                   zoom: zoom,
                 ),
                 Padding(

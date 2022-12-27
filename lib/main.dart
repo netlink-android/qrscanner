@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_scanner/const.dart';
 import 'package:qr_scanner/bottomNavigator/create.dart';
@@ -8,7 +9,8 @@ import 'package:qr_scanner/bottomNavigator/home_page.dart';
 import 'package:qr_scanner/bottomNavigator/setting.dart';
 import 'package:qr_scanner/them_provider.dart';
 
-void main() {
+void main() async {
+  await GetStorage.init();
   runApp(const MyApp());
 }
 
@@ -26,7 +28,6 @@ class _MyAppState extends State<MyApp> {
         create: (context) => ThemeProvider(),
         builder: (context, _) {
           final themeProvider = Provider.of<ThemeProvider>(context);
-
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             themeMode: themeProvider.themeMode,
