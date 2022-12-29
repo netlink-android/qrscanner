@@ -85,16 +85,12 @@ class _ScanQrPageState extends State<ScanQrPage> {
           ),
           Expanded(
             flex: 4,
-            
             child: Stack(
               children: [
-                 QRScannerOverlay(
-                  overlayColour: Colors.black,
-                  zoom: zoom,
-                ),
+                
                 MobileScanner(
+                    fit: BoxFit.cover,
                     controller: controller,
-                    // fit: FittedSizes,
                     allowDuplicates: false,
                     onDetect: (barcode, args) {
                       if (barcode.rawValue == null) {
@@ -113,53 +109,54 @@ class _ScanQrPageState extends State<ScanQrPage> {
                         debugPrint('Barcode found! $code');
                       }
                     }),
-                QRScannerOverlay(
-                  overlayColour: Colors.black.withOpacity(1),
-                  zoom: zoom,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Align(
-                      widthFactor: double.infinity,
-                      alignment: Alignment.bottomRight,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  if (zoom > 1) {
-                                    zoom -= 0.1;
-                                  } else if (zoom == 1) {
-                                    zoom = zoom;
-                                  }
-                                });
-                              },
-                              icon: Icon(
-                                Icons.strikethrough_s,
-                                color: Colors.white,
-                                size: 50,
-                              )),
+                
+                // QRScannerOverlay(
+                //   overlayColour: Colors.black.withOpacity(0.5),
+                //   zoom: zoom,
+                // ),
+                // Padding(
+                //   padding: const EdgeInsets.all(20.0),
+                //   child: Align(
+                //       widthFactor: double.infinity,
+                //       alignment: Alignment.bottomRight,
+                //       child: Row(
+                //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //         children: [
+                //           IconButton(
+                //               onPressed: () {
+                //                 setState(() {
+                //                   if (zoom > 1) {
+                //                     zoom -= 0.1;
+                //                   } else if (zoom == 1) {
+                //                     zoom = zoom;
+                //                   }
+                //                 });
+                //               },
+                //               icon: Icon(
+                //                 Icons.strikethrough_s,
+                //                 color: Colors.white,
+                //                 size: 50,
+                //               )),
 
-                          IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  if (zoom < 1.6) {
-                                    zoom += 0.1;
-                                  } else if (zoom == 1.6) {
-                                    zoom = zoom;
-                                  }
-                                });
-                              },
-                              icon: Icon(
-                                Icons.add,
-                                color: Colors.white,
-                                size: 50,
-                              )),
-                          // buildSliderTopLabel(),
-                        ],
-                      )),
-                )
+                //           IconButton(
+                //               onPressed: () {
+                //                 setState(() {
+                //                   if (zoom < 1.6) {
+                //                     zoom += 0.1;
+                //                   } else if (zoom == 1.6) {
+                //                     zoom = zoom;
+                //                   }
+                //                 });
+                //               },
+                //               icon: Icon(
+                //                 Icons.add,
+                //                 color: Colors.white,
+                //                 size: 50,
+                //               )),
+                //           // buildSliderTopLabel(),
+                //         ],
+                //       )),
+                // )
               ],
             ),
           ),

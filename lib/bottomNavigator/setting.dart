@@ -12,10 +12,13 @@ class SettingPage extends StatefulWidget {
   State<SettingPage> createState() => _SettingPageState();
 }
 
+enum MenuItem { Vietnames, English, Phap }
+
 class _SettingPageState extends State<SettingPage> {
   final switchData = GetStorage();
   bool isSwitched = false;
 
+  String valueLanguage = 'English';
   @override
   void initState() {
     super.initState();
@@ -79,8 +82,7 @@ class _SettingPageState extends State<SettingPage> {
                                 listen: false);
                             provider.toggleTheme(value);
 
-                            switchData.write(
-                                'isSwitched', isSwitched);
+                            switchData.write('isSwitched', isSwitched);
                           });
                         }),
                   ],
@@ -113,14 +115,35 @@ class _SettingPageState extends State<SettingPage> {
                     Row(
                       children: [
                         Text(
-                          'English',
+                          valueLanguage,
                           style: textType.copyWith(
                               fontSize: 16, fontWeight: FontWeight.normal),
                         ),
-                        Icon(
-                          Icons.arrow_right,
-                          size: 40,
-                        ),
+                        PopupMenuButton<MenuItem>(
+                            onSelected: (value) {
+                              setState(() {
+                                valueLanguage = value.name;
+                              });
+
+                              // if (value == MenuItem.item1) {
+                              //   valueLanguage = value.toString();
+                              // } else if (value == MenuItem.item2) {
+                              // } else if (value == MenuItem.item2) {}
+                            },
+                            itemBuilder: (context) => const [
+                                  PopupMenuItem(
+                                    value: MenuItem.Vietnames,
+                                    child: Text('VietName'),
+                                  ),
+                                  PopupMenuItem(
+                                    value: MenuItem.English,
+                                    child: Text('English'),
+                                  ),
+                                  PopupMenuItem(
+                                    value: MenuItem.Phap,
+                                    child: Text('Phap'),
+                                  ),
+                                ])
                       ],
                     ),
                   ],

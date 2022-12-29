@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qr_scanner/page/createpage/generate_qrcode/url.dart';
 
 import '../../const.dart';
 
@@ -29,11 +30,18 @@ class _CreateCustomPageState extends State<CreateCustomPage> {
             child: GestureDetector(
                 onTap: () {
                   print(widget.type);
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (ctx) => UrlPage(),
+                    ),
+                  );
                 },
                 child: Image.asset('assets/iconcustom/' + widget.icontype)),
           ),
         ),
-        SizedBox(height: 5,),
+        SizedBox(
+          height: 5,
+        ),
         Text(
           widget.type,
           style: textType.copyWith(fontSize: 18, fontWeight: FontWeight.normal),
