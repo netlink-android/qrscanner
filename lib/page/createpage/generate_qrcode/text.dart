@@ -1,34 +1,25 @@
-import 'dart:io';
-import 'dart:ui';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 import 'package:qr_scanner/page/createpage/generate_qrcode/url_data.dart';
 
 import '../../../const.dart';
 
-class UrlPage extends StatefulWidget {
-  const UrlPage({super.key});
+class TextPage extends StatefulWidget {
+  const TextPage({super.key});
 
   @override
-  State<UrlPage> createState() => _UrlPageState();
+  State<TextPage> createState() => _TextPageState();
 }
 
-class _UrlPageState extends State<UrlPage> {
+class _TextPageState extends State<TextPage> {
   TextEditingController texturl = TextEditingController();
-  final _newValue = "http://";
 
   @override
   void initState() {
     // TODO: implement initState
-
     texturl = TextEditingController()
       ..addListener(() {
         setState(() {});
       });
-    setText(_newValue);
     super.initState();
   }
 
@@ -36,7 +27,7 @@ class _UrlPageState extends State<UrlPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Url'),
+        title: Text('Text'),
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 15.0, left: 8, right: 8),
@@ -55,7 +46,7 @@ class _UrlPageState extends State<UrlPage> {
                     controller: texturl,
                     decoration: InputDecoration(
                       prefixIcon: Icon(
-                        Icons.link,
+                        Icons.text_fields_outlined,
                       ),
                       suffixIcon: IconButton(
                           onPressed: () {
@@ -79,81 +70,7 @@ class _UrlPageState extends State<UrlPage> {
                 Container(
                   height: 10,
                 ),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: Container(
-                        height: 35,
-                        width: 70,
-                        decoration: BoxDecoration(
-                          color: blue.withOpacity(0.6),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Center(
-                          child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  setText('www');
-                                });
-                              },
-                              child: Text(
-                                'www',
-                                style: textType.copyWith(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.normal),
-                              )),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: Container(
-                        height: 35,
-                        width: 70,
-                        decoration: BoxDecoration(
-                          color: blue.withOpacity(0.6),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Center(
-                          child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  setText('.com');
-                                });
-                              },
-                              child: Text(
-                                '.com',
-                                style: textType.copyWith(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.normal),
-                              )),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      height: 35,
-                      width: 70,
-                      decoration: BoxDecoration(
-                        color: blue.withOpacity(0.6),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Center(
-                        child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                setText('.vn');
-                              });
-                            },
-                            child: Text(
-                              '.vn',
-                              style: textType.copyWith(
-                                  fontSize: 20, fontWeight: FontWeight.normal),
-                            )),
-                      ),
-                    ),
-                  ],
-                ),
+                
               ],
             ),
             Padding(
@@ -172,9 +89,9 @@ class _UrlPageState extends State<UrlPage> {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (ctx) => UrlQrPage(
-                              titleType: 'URL',
+                              titleType: 'Text',
                               data: texturl.text.toString(),
-                              type: texturl.text.toString()
+                              type: texturl.text.toString(),
                             ),
                           ),
                         );

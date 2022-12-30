@@ -1,34 +1,25 @@
-import 'dart:io';
-import 'dart:ui';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 import 'package:qr_scanner/page/createpage/generate_qrcode/url_data.dart';
-
 import '../../../const.dart';
 
-class UrlPage extends StatefulWidget {
-  const UrlPage({super.key});
+class EmailPage extends StatefulWidget {
+  const EmailPage({super.key});
 
   @override
-  State<UrlPage> createState() => _UrlPageState();
+  State<EmailPage> createState() => _EmailPageState();
 }
 
-class _UrlPageState extends State<UrlPage> {
-  TextEditingController texturl = TextEditingController();
-  final _newValue = "http://";
-
+class _EmailPageState extends State<EmailPage> {
+  TextEditingController textEmail = TextEditingController();
+  TextEditingController textSublect = TextEditingController();
+  TextEditingController textMessage = TextEditingController();
   @override
   void initState() {
     // TODO: implement initState
-
-    texturl = TextEditingController()
+    textEmail = TextEditingController()
       ..addListener(() {
         setState(() {});
       });
-    setText(_newValue);
     super.initState();
   }
 
@@ -36,7 +27,7 @@ class _UrlPageState extends State<UrlPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Url'),
+        title: Text('Email'),
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 15.0, left: 8, right: 8),
@@ -52,15 +43,15 @@ class _UrlPageState extends State<UrlPage> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: TextField(
-                    controller: texturl,
+                    controller: textEmail,
                     decoration: InputDecoration(
                       prefixIcon: Icon(
-                        Icons.link,
+                        Icons.email,
                       ),
                       suffixIcon: IconButton(
                           onPressed: () {
                             setState(() {
-                              deleteText();
+                              deleteText(textEmail);
                             });
                           },
                           icon: Icon(Icons.close_rounded)),
@@ -85,7 +76,7 @@ class _UrlPageState extends State<UrlPage> {
                       padding: const EdgeInsets.only(right: 8.0),
                       child: Container(
                         height: 35,
-                        width: 70,
+                        width: 80,
                         decoration: BoxDecoration(
                           color: blue.withOpacity(0.6),
                           borderRadius: BorderRadius.circular(12),
@@ -94,11 +85,11 @@ class _UrlPageState extends State<UrlPage> {
                           child: GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  setText('www');
+                                  setText('.gmail');
                                 });
                               },
                               child: Text(
-                                'www',
+                                '@gmail',
                                 style: textType.copyWith(
                                     fontSize: 20,
                                     fontWeight: FontWeight.normal),
@@ -154,6 +145,63 @@ class _UrlPageState extends State<UrlPage> {
                     ),
                   ],
                 ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: grey.withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: TextField(
+                      controller: textSublect,
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                deleteText(textSublect);
+                              });
+                            },
+                            icon: Icon(Icons.close_rounded)),
+                        hintText: 'Subject Of  Email',
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: grey, width: 2),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: black),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: grey.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: TextField(
+                    controller: textMessage,
+                    decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              deleteText(textMessage);
+                            });
+                          },
+                          icon: Icon(Icons.close_rounded)),
+                      hintText: 'Message',
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(color: grey, width: 2),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(color: black),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
             Padding(
@@ -161,20 +209,25 @@ class _UrlPageState extends State<UrlPage> {
               child: ElevatedButton(
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color?>(
-                        texturl.text.toString().length > 0 ? blue : grey),
+                        textEmail.text.toString().length > 0 ? blue : grey),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18.0),
                       // side: BorderSide(color: Colors.red)
                     ))),
-                onPressed: texturl.text.toString().length > 0
+                onPressed: textEmail.text.toString().length > 0
                     ? () {
+                        String email = textEmail.text.toString();
+                        String sublect = textSublect.text.toString();
+                        String message = textMessage.text.toString();
+
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (ctx) => UrlQrPage(
-                              titleType: 'URL',
-                              data: texturl.text.toString(),
-                              type: texturl.text.toString()
+                              titleType: 'Email',
+                              data:
+                                  'MATMSG:TO:$email;SUB:$sublect;BODY:$message;;',
+                              type: email,
                             ),
                           ),
                         );
@@ -197,16 +250,16 @@ class _UrlPageState extends State<UrlPage> {
   }
 
   void setText(String url) {
-    texturl.value = TextEditingValue(
-      text: texturl.text + url,
+    textEmail.value = TextEditingValue(
+      text: textEmail.text + url,
       selection: TextSelection.fromPosition(
-        TextPosition(offset: (texturl.text + url).length),
+        TextPosition(offset: (textEmail.text + url).length),
       ),
     );
   }
 
-  void deleteText() {
-    texturl.value = TextEditingValue(
+  void deleteText(TextEditingController textDelete) {
+    textDelete.value = TextEditingValue(
       text: '',
     );
   }

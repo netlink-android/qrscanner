@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:qr_scanner/page/createpage/generate_qrcode/call.dart';
+import 'package:qr_scanner/page/createpage/generate_qrcode/custom.dart';
+import 'package:qr_scanner/page/createpage/generate_qrcode/email.dart';
+import 'package:qr_scanner/page/createpage/generate_qrcode/sms.dart';
+import 'package:qr_scanner/page/createpage/generate_qrcode/text.dart';
 import 'package:qr_scanner/page/createpage/generate_qrcode/url.dart';
+import 'package:qr_scanner/page/createpage/generate_qrcode/v-card.dart';
+import 'package:qr_scanner/page/createpage/generate_qrcode/wifi.dart';
 
 import '../../const.dart';
 
@@ -14,6 +21,26 @@ class CreateCustomPage extends StatefulWidget {
 }
 
 class _CreateCustomPageState extends State<CreateCustomPage> {
+  List<Widget> _generateQr = [
+    UrlPage(),
+    EmailPage(),
+    TextPage(),
+    CallPage(),
+    WifiPage(),
+    SmsPage(),
+    VcardPage(),
+    CustomPageQr()
+  ];
+  List<String> _typeQr = [
+    'URL',
+    'Email',
+    'Text',
+    'Call',
+    'Wifi',
+    'SMS',
+    'V-card',
+    'Custom',
+  ];
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -21,23 +48,23 @@ class _CreateCustomPageState extends State<CreateCustomPage> {
         Container(
           height: 70,
           width: 70,
-          decoration: BoxDecoration(
-            color: blue.withOpacity(0.6),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(18.0),
-            child: GestureDetector(
-                onTap: () {
-                  print(widget.type);
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (ctx) => UrlPage(),
-                    ),
-                  );
-                },
-                child: Image.asset('assets/iconcustom/' + widget.icontype)),
-          ),
+          child: ElevatedButton(
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color?>(blue),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    // side: BorderSide(color: Colors.red)
+                  ))),
+              onPressed: () {
+                print(widget.type);
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (ctx) => _pageQr(),
+                  ),
+                );
+              },
+              child: Image.asset('assets/iconcustom/' + widget.icontype)),
         ),
         SizedBox(
           height: 5,
@@ -48,5 +75,15 @@ class _CreateCustomPageState extends State<CreateCustomPage> {
         ),
       ],
     );
+  }
+
+  Widget _pageQr() {
+    int index = 0;
+    for (int i = 0; i < _generateQr.length; i++) {
+      if (widget.type == _typeQr[i]) {
+        index = i;
+      }
+    }
+    return _generateQr[index];
   }
 }
