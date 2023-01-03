@@ -1,28 +1,28 @@
+//https://maps.google.com/local?q=53.09164029206792,61.84474427734375
 import 'package:flutter/material.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:qr_scanner/page/createpage/generate_qrcode/url_data.dart';
 import '../../../const.dart';
 
-class SmsPage extends StatefulWidget {
-  const SmsPage({super.key});
+class LocationPage extends StatefulWidget {
+  const LocationPage({super.key});
 
   @override
-  State<SmsPage> createState() => _SmsPageState();
+  State<LocationPage> createState() => _LocationPageState();
 }
 
 enum TypeItem { WEP, WPA, No_encryption }
 
-class _SmsPageState extends State<SmsPage> {
-  TextEditingController textPhone = TextEditingController();
-  TextEditingController textMessage = TextEditingController();
-  String countryCode = '';
+class _LocationPageState extends State<LocationPage> {
+  TextEditingController textLatitude = TextEditingController();
+
+  TextEditingController textLongitude = TextEditingController();
   @override
   void initState() {
-    textPhone = TextEditingController()
+    textLatitude = TextEditingController()
       ..addListener(() {
         setState(() {});
       });
-    textMessage = TextEditingController()
+    textLongitude = TextEditingController()
       ..addListener(() {
         setState(() {});
       });
@@ -34,7 +34,7 @@ class _SmsPageState extends State<SmsPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text('SMS'),
+        title: Text('Location'),
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 15.0, left: 8, right: 8),
@@ -49,22 +49,20 @@ class _SmsPageState extends State<SmsPage> {
                     color: grey.withOpacity(0.5),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: IntlPhoneField(
-                    disableLengthCheck: true,
-                    controller: textPhone,
+                  child: TextField(
+                    controller: textLatitude,
                     decoration: InputDecoration(
                       prefixIcon: Icon(
-                        Icons.call,
+                        Icons.location_on,
                       ),
                       suffixIcon: IconButton(
                           onPressed: () {
                             setState(() {
-                              deleteText(textPhone);
+                              deleteText(textLatitude);
                             });
-                            FocusScope.of(context).unfocus();
                           },
                           icon: Icon(Icons.close_rounded)),
-                      hintText: 'Please enter number',
+                      hintText: 'Latitude',
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                         borderSide: BorderSide(color: grey, width: 2),
@@ -74,37 +72,29 @@ class _SmsPageState extends State<SmsPage> {
                         borderSide: BorderSide(color: black),
                       ),
                     ),
-                    onChanged: (phone) {
-                      countryCode = phone.completeNumber;
-                      print(phone.completeNumber);
-                    },
-                    onCountryChanged: (country) {
-                      print('Country changed to: ' + country.name);
-                    },
-                    initialCountryCode: 'VN',
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  padding: const EdgeInsets.only(top: 10.0),
                   child: Container(
                     decoration: BoxDecoration(
                       color: grey.withOpacity(0.5),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: TextField(
-                      controller: textMessage,
+                      controller: textLongitude,
                       decoration: InputDecoration(
                         prefixIcon: Icon(
-                          Icons.sms,
+                          Icons.location_on_outlined,
                         ),
                         suffixIcon: IconButton(
                             onPressed: () {
                               setState(() {
-                                deleteText(textMessage);
+                                deleteText(textLongitude);
                               });
                             },
                             icon: Icon(Icons.close_rounded)),
-                        hintText: 'Message',
+                        hintText: 'Longitude',
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide: BorderSide(color: grey, width: 2),
@@ -124,8 +114,8 @@ class _SmsPageState extends State<SmsPage> {
               child: ElevatedButton(
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color?>(
-                        (textPhone.text.toString().length > 0 &&
-                                textMessage.text.toString().length > 0)
+                        (textLatitude.text.toString().length > 0 &&
+                                textLongitude.text.toString().length > 0)
                             ? blue
                             : grey),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -133,19 +123,20 @@ class _SmsPageState extends State<SmsPage> {
                       borderRadius: BorderRadius.circular(18.0),
                       // side: BorderSide(color: Colors.red)
                     ))),
-                onPressed: (textPhone.text.toString().length > 0 &&
-                        textMessage.text.toString().length > 0)
+                onPressed: (textLatitude.text.toString().length > 0 &&
+                        textLongitude.text.toString().length > 0)
                     ? () {
-                        String phone = textPhone.text.toString();
+                        String latitude = textLatitude.text.toString();
 
-                        String mess = textMessage.text.toString();
+                        String longitude = textLongitude.text.toString();
 
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (ctx) => UrlQrPage(
-                              titleType: 'SMS',
-                              data: 'SMSTO:$phone:$mess',
-                              type: phone,
+                              titleType: 'Location',
+                              data:
+                                  'https://maps.google.com/local?q=$longitude,$latitude',
+                              type: 'Latitude: $latitude' + ' - ' + 'Longitude: $longitude',
                             ),
                           ),
                         );

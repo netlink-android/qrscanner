@@ -4,8 +4,7 @@
 // import 'package:qr_code_scanner/qr_code_scanner.dart';
 // import 'package:qr_scanner/const.dart';
 
-// import '../page/homepage/dataQr_page.dart';
-// import '../page/homepage/qr_over.dart';
+// import 'dataQr_page.dart';
 
 // class ScanQrPage extends StatefulWidget {
 //   const ScanQrPage({super.key});
@@ -221,7 +220,6 @@
 //     controller.scannedDataStream.listen((scanData) {
 //       setState(() {
 //         result = scanData;
-//         codeState = true;
 //         data();
 //         // Navigator.of(context).push(
 //         //   MaterialPageRoute(
@@ -251,15 +249,19 @@
 //   }
 
 //   void data() {
-//     if (codeState == true) {
-//       Navigator.of(context).push(
-//         MaterialPageRoute(
-//           builder: (ctx) => DataQrPage(
-//             data: result!.code.toString(),
-//           ),
-//         ),
-//       );
-//     }
+//     // if (codeState == true) {
+//     //   Navigator.of(context).push(
+//     //     MaterialPageRoute(
+//     //       builder: (ctx) => DataQrPage(
+//     //         data: result!.code.toString(),
+//     //       ),
+//     //     ),
+//     //   );
+//     // }
+//     String data = result!.code.toString();
+//     ScaffoldMessenger.of(context).showSnackBar(
+//       SnackBar(content: Text(data)),
+//     );
 //   }
 
 //   @override

@@ -72,6 +72,7 @@ class _CreatePageState extends State<CreatePage> {
                 CreateCustomPage(type: 'Wifi', icontype: 'wifi.png'),
                 CreateCustomPage(type: 'SMS', icontype: 'sms.png'),
                 CreateCustomPage(type: 'V-card', icontype: 'card.png'),
+                CreateCustomPage(type: 'Location', icontype: 'location.png'),
                 CreateCustomPage(type: 'Custom', icontype: 'add.png'),
               ],
             ),
