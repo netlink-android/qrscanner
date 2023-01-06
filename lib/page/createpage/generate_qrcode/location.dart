@@ -1,6 +1,6 @@
 //https://maps.google.com/local?q=53.09164029206792,61.84474427734375
 import 'package:flutter/material.dart';
-import 'package:qr_scanner/page/createpage/generate_qrcode/url_data.dart';
+import 'package:qr_scanner/page/createpage/generate_qrcode/data/url_data.dart';
 import '../../../const.dart';
 
 class LocationPage extends StatefulWidget {

@@ -3,6 +3,7 @@ import 'package:qr_scanner/page/createpage/generate_qrcode/call.dart';
 import 'package:qr_scanner/page/createpage/generate_qrcode/custom.dart';
 import 'package:qr_scanner/page/createpage/generate_qrcode/email.dart';
 import 'package:qr_scanner/page/createpage/generate_qrcode/sms.dart';
+import 'package:qr_scanner/page/createpage/generate_qrcode/social.dart';
 import 'package:qr_scanner/page/createpage/generate_qrcode/text.dart';
 import 'package:qr_scanner/page/createpage/generate_qrcode/url.dart';
 import 'package:qr_scanner/page/createpage/generate_qrcode/v-card.dart';
@@ -31,6 +32,7 @@ class _CreateCustomPageState extends State<CreateCustomPage> {
     SmsPage(),
     VcardPage(),
     LocationPage(),
+    SocialPage(),
     CustomPageQr(),
   ];
   List<String> _typeQr = [
@@ -42,6 +44,7 @@ class _CreateCustomPageState extends State<CreateCustomPage> {
     'SMS',
     'V-card',
     'Location',
+    'Social',
     'Custom',
   ];
   @override

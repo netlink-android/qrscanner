@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:qr_scanner/page/createpage/generate_qrcode/url_data.dart';
+import 'package:qr_scanner/page/createpage/generate_qrcode/data/url_data.dart';
 
 import '../../../const.dart';
 
