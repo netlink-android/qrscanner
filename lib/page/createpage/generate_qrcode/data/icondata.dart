@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 
@@ -7,7 +8,11 @@ import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:qr_scanner/const.dart';
+import 'package:qr_scanner/model/datetime.dart';
+import 'package:qr_scanner/storage/qrstorage.dart';
 import 'package:share_plus/share_plus.dart';
+
+import '../../../../model/qrcustom_model.dart';
 
 class IconQrPage extends StatefulWidget {
   String data = '', image = '', titleType = '', typeicon = '';
@@ -31,6 +36,57 @@ class IconQrPage extends StatefulWidget {
 
 class _IconQrPageState extends State<IconQrPage> {
   bool favorite = false;
+  StorageProvider save = StorageProvider();
+  Future<void> addHistoryCustom() async {
+    //store the user entered data in user object
+    //store the user entered data in user object
+    final now = DateTime.now();
+    String dayStr = '';
+    if (now.weekday == DateTime.monday) {
+      dayStr = 'Moday';
+    } else if (now.weekday == DateTime.tuesday) {
+      dayStr = 'Tuesday';
+    } else if (now.weekday == DateTime.wednesday) {
+      dayStr = 'Wednesday';
+    } else if (now.weekday == DateTime.thursday) {
+      dayStr = 'Thursday';
+    } else if (now.weekday == DateTime.friday) {
+      dayStr = 'Friday';
+    } else if (now.weekday == DateTime.saturday) {
+      dayStr = 'Saturday';
+    } else if (now.weekday == DateTime.sunday) {
+      dayStr = 'Sunday';
+    }
+    String time = now.hour.toString() + ':' + now.minute.toString();
+    DateTimeModel date =
+        DateTimeModel(dayStr, now.year, now.month, now.day, time);
+
+    QrCustomModel qrCustomModel = new QrCustomModel(
+        data: widget.data,
+        image: widget.image,
+        titleType: widget.titleType,
+        typeicon: widget.typeicon,
+        bodyColor: widget.shapeColor.toString().substring(6, 16),
+        eyeColor: widget.eyeColor.toString().substring(6, 16),
+        bodyvalue: widget.shapevalue,
+        eyevalue: widget.eyevalue,
+        date: date,
+        favorite: favorite);
+
+    // encode / convert object into json string
+    String dataQr = jsonEncode(qrCustomModel);
+
+    //save the data into sharedPreferences using key-value pairs
+    save.addData(dataQr);
+  }
+
+  @override
+  void initState() {
+    setState(() {
+      addHistoryCustom();
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

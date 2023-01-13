@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qr_scanner/const.dart';
 import 'package:qr_scanner/page/createpage/createCustom.dart';
+import 'package:qr_scanner/page/createpage/create_history/qrcreated_history.dart';
 
 class CreatePage extends StatefulWidget {
   const CreatePage({super.key});
@@ -22,7 +23,13 @@ class _CreatePageState extends State<CreatePage> {
           SizedBox(height: 15),
           GestureDetector(
             onTap: () {
-              print('history');
+              setState(() {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (ctx) => QrCreatedHistory(),
+                  ),
+                );
+              });
             },
             child: Container(
               height: 50,
