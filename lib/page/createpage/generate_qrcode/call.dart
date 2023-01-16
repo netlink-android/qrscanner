@@ -134,6 +134,7 @@ class _CallPageState extends State<CallPage> {
                               titleType: 'Call',
                               data: 'tel:$countryCode',
                               type: countryCode,
+                              typeicon: 'assets/iconcustom/call.png',
                             ),
                           ),
                         );

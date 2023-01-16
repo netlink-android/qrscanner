@@ -63,6 +63,7 @@ class _IconQrPageState extends State<IconQrPage> {
 
     QrCustomModel qrCustomModel = new QrCustomModel(
         data: widget.data,
+        type: widget.data,
         image: widget.image,
         titleType: widget.titleType,
         typeicon: widget.typeicon,

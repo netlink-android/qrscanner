@@ -33,7 +33,7 @@ class _CreateCustomPageState extends State<CreateCustomPage> {
     VcardPage(),
     LocationPage(),
     SocialPage(),
-    CustomPageQr(),
+    // CustomPageQr(),
   ];
   List<String> _typeQr = [
     'URL',
@@ -44,8 +44,8 @@ class _CreateCustomPageState extends State<CreateCustomPage> {
     'SMS',
     'V-card',
     'Location',
-    'Social',
     'Custom',
+    // 'Custom',
   ];
   @override
   Widget build(BuildContext context) {

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:qr_scanner/model/qrcustom_model.dart';
 import 'package:qr_scanner/page/createpage/generate_qrcode/data/icondata.dart';
 import 'package:qr_scanner/page/createpage/generate_qrcode/data/url_data.dart';
 
@@ -51,7 +52,7 @@ class _SocialPageState extends State<SocialPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text('Social'),
+        title: Text('Custom'),
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 15.0, left: 8, right: 8),
@@ -677,7 +678,7 @@ class _SocialPageState extends State<SocialPage> {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (ctx) => IconQrPage(
-                              titleType: 'Social',
+                              titleType: 'Custom',
                               data: texturl.text.toString(),
                               typeicon: _texticon,
                               image: _asseticon,

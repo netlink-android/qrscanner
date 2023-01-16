@@ -92,6 +92,7 @@ class _TextPageState extends State<TextPage> {
                               titleType: 'Text',
                               data: texturl.text.toString(),
                               type: texturl.text.toString(),
+                               typeicon: 'assets/iconcustom/text.png',
                             ),
                           ),
                         );

@@ -174,7 +174,8 @@ class _UrlPageState extends State<UrlPage> {
                             builder: (ctx) => UrlQrPage(
                               titleType: 'URL',
                               data: texturl.text.toString(),
-                              type: texturl.text.toString()
+                              type: texturl.text.toString(),
+                               typeicon: 'assets/iconcustom/link.png',
                             ),
                           ),
                         );

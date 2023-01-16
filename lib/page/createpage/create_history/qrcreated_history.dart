@@ -1,10 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:qr_scanner/const.dart';
 import 'package:qr_scanner/model/qrcustom_model.dart';
 import 'package:qr_scanner/storage/qrstorage.dart';
+
+import 'detail_dataHistory.dart';
 
 class QrCreatedHistory extends StatefulWidget {
   const QrCreatedHistory({super.key});
@@ -27,167 +30,18 @@ class _QrCreatedHistoryState extends State<QrCreatedHistory> {
     super.initState();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return valuedata
-        ? SafeArea(
-            child: Scaffold(
-              body: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                Navigator.pop(context);
-                              });
-                            },
-                            icon: Icon(
-                              Icons.arrow_back,
-                              size: 25,
-                            ),
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: blue,
-                            boxShadow: [
-                              BoxShadow(
-                                color: black.withOpacity(0.2),
-                                offset: Offset(1, 1),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Text('Qr Created History', style: textType),
-                        Container(
-                          child: IconButton(
-                            onPressed: () {
-                              setState(() {});
-                            },
-                            icon: Icon(
-                              Icons.filter_list_alt,
-                              size: 25,
-                            ),
-                          ),
-                          decoration: BoxDecoration(
-                            color: blue,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 7),
-                    // Container(child: Text('Last')),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: data.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(top: 8.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      qrCustomModel[index].date.toString(),
-                                      style: textType.copyWith(
-                                          fontSize: 16,
-                                          color: blue.withOpacity(0.7)),
-                                    ),
-                                    Text(
-                                      qrCustomModel[index].date.time,
-                                      style: textType.copyWith(
-                                          fontSize: 16,
-                                          color: blue.withOpacity(0.7)),
-                                    ),
-                                  ],
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      print(qrCustomModel[index]);
-                                      // addFo(index, user[index]);
-                                    });
-                                  },
-                                  child: Container(
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                      color: grey.withOpacity(0.5),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 12),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Container(
-                                                  height: 30,
-                                                  width: 30,
-                                                  child: Image.asset(
-                                                      qrCustomModel[index]
-                                                          .image)),
-                                              SizedBox(width: 8),
-                                              Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    qrCustomModel[index].data,
-                                                    style: textType.copyWith(
-                                                        fontSize: 16),
-                                                  ),
-                                                  Text(
-                                                    qrCustomModel[index]
-                                                        .typeicon,
-                                                    style: textType.copyWith(
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.normal),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                          Icon(
-                                            Icons.arrow_right,
-                                            size: 40,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          )
-        : Scaffold();
+  Future<void> removeData(int id) async {
+    await strSave.remoceItem(id);
+    setState(() {
+      getStorageCreated();
+      if (dataQr.read('data') == null) {
+        valuedata = false;
+      }
+    });
   }
 
   Future<void> getStorageCreated() async {
+    qrCustomModel.clear();
     final now = DateTime.now();
 
     if (dataQr.read('data') != null) {
@@ -222,28 +76,309 @@ class _QrCreatedHistoryState extends State<QrCreatedHistory> {
     }
   }
 
-  Future<void> removeData(int id) async {
-    await strSave.remoceItem(id);
-    setState(() {
-      valuedata = false;
-    });
+  @override
+  void didUpdateWidget(covariant QrCreatedHistory oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    print('object');
   }
-  // Future<void> addFo(int id, QrCustomModel userdata) async {
-  //   //store the user entered data in user object
-  //   //store the user entered data in user object
-  //   QrCustomModel userFr = new QrCustomModel(
-  //       userdata.name,
-  //       userdata.email,
-  //       userdata.phone,
-  //       Color(int.parse(userdata.color)).toString().substring(6, 16),
-  //       userdata.date,
-  //       userdata.time,
-  //       true);
 
-  //   // encode / convert object into json string
-  //   String user11 = jsonEncode(userFr);
-
-  //   //save the data into sharedPreferences using key-value pairs
-  //   strSave.addDFavo(id, user11);
-  // }
+  @override
+  Widget build(BuildContext context) {
+    return valuedata
+        ? SafeArea(
+            child: Scaffold(
+              body: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          child: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                Navigator.of(context).pop();
+                              });
+                            },
+                            icon: Icon(
+                              Icons.arrow_back,
+                              size: 25,
+                            ),
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: blue,
+                            boxShadow: [
+                              BoxShadow(
+                                color: black.withOpacity(0.3),
+                                offset: Offset(1, 2),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Text('Qr Created History', style: textType),
+                        Container(
+                          child: IconButton(
+                            onPressed: () {
+                              setState(() {});
+                            },
+                            icon: Icon(
+                              Icons.filter_list_alt,
+                              size: 25,
+                            ),
+                          ),
+                          decoration: BoxDecoration(
+                            color: blue,
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: [
+                              BoxShadow(
+                                color: black.withOpacity(0.3),
+                                offset: Offset(1, 2),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 7),
+                    // Container(child: Text('Last')),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: data.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 12.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        qrCustomModel[index].date.toString(),
+                                        style: textType.copyWith(
+                                            fontSize: 16,
+                                            color: blue.withOpacity(0.7)),
+                                      ),
+                                      Text(
+                                        qrCustomModel[index].date.time,
+                                        style: textType.copyWith(
+                                            fontSize: 16,
+                                            color: blue.withOpacity(0.7)),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                    decoration: BoxDecoration(
+                                        color: grey.withOpacity(0.3),
+                                        borderRadius:
+                                            BorderRadius.circular(12)),
+                                    child: Slidable(
+                                      endActionPane: ActionPane(
+                                          extentRatio: 0.15,
+                                          motion: const BehindMotion(),
+                                          children: [
+                                            SlidableAction(
+                                              onPressed: (context) {
+                                                // cartProvider.remoceCart(
+                                                //     cartProvider.carts[index].id!);
+                                                setState(() {
+                                                  removeData(index);
+                                                });
+                                              },
+                                              icon:
+                                                  Icons.delete_outline_rounded,
+                                              foregroundColor: red,
+                                              autoClose: true,
+                                              backgroundColor:
+                                                  grey.withOpacity(0.1),
+                                              borderRadius:
+                                                  const BorderRadius.horizontal(
+                                                      right:
+                                                          Radius.circular(20)),
+                                            )
+                                          ]),
+                                      child: GestureDetector(
+                                        onTap: () async {
+                                          final result =
+                                              await Navigator.of(context).push(
+                                            new MaterialPageRoute(
+                                              builder: (ctx) =>
+                                                  DetailDataHistory(
+                                                id: index,
+                                                titleType: qrCustomModel[index]
+                                                    .titleType,
+                                                data: qrCustomModel[index].data,
+                                                type: qrCustomModel[index].type,
+                                                typeicon: qrCustomModel[index]
+                                                    .typeicon,
+                                                image:
+                                                    qrCustomModel[index].image,
+                                                shapeColor: qrCustomModel[index]
+                                                    .bodyColor,
+                                                shapevalue: qrCustomModel[index]
+                                                    .bodyvalue,
+                                                eyeColor: qrCustomModel[index]
+                                                    .eyeColor,
+                                                eyevalue: qrCustomModel[index]
+                                                    .eyevalue,
+                                                dateTimeModel:
+                                                    qrCustomModel[index].date,
+                                                favorite: qrCustomModel[index]
+                                                    .favorite,
+                                              ),
+                                            ),
+                                          );
+                                          print(result);
+                                          if (result != null) {
+                                            setState(() {
+                                              getStorageCreated();
+                                            });
+                                          }
+                                          // addFo(index, user[index]);
+                                        },
+                                        child: Container(
+                                          height: 50,
+                                          decoration: BoxDecoration(
+                                            color: grey.withOpacity(0.5),
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 12),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Container(
+                                                        height: 30,
+                                                        width: 30,
+                                                        child: Image.asset(
+                                                            qrCustomModel[index]
+                                                                .image)),
+                                                    SizedBox(width: 8),
+                                                    Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          qrCustomModel[index]
+                                                              .type,
+                                                          style:
+                                                              textType.copyWith(
+                                                                  fontSize: 16),
+                                                        ),
+                                                        Text(
+                                                          qrCustomModel[index]
+                                                              .typeicon,
+                                                          style: textType.copyWith(
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .normal),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                                // Icon(
+                                                //   Icons.arrow_right,
+                                                //   size: 40,
+                                                // ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          )
+        : SafeArea(
+            child: Scaffold(
+              body: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          child: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                Navigator.pop(context);
+                              });
+                            },
+                            icon: Icon(
+                              Icons.arrow_back,
+                              size: 25,
+                            ),
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: blue,
+                            boxShadow: [
+                              BoxShadow(
+                                color: black.withOpacity(0.3),
+                                offset: Offset(1, 2),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Text('Qr Created History', style: textType),
+                        Container(
+                          child: IconButton(
+                            onPressed: () {
+                              setState(() {});
+                            },
+                            icon: Icon(
+                              Icons.filter_list_alt,
+                              size: 25,
+                            ),
+                          ),
+                          decoration: BoxDecoration(
+                            color: blue,
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: [
+                              BoxShadow(
+                                color: black.withOpacity(0.3),
+                                offset: Offset(1, 2),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+  }
 }

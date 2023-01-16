@@ -85,7 +85,7 @@ class _EmailPageState extends State<EmailPage> {
                           child: GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  setText('.gmail');
+                                  setText('@gmail');
                                 });
                               },
                               child: Text(
@@ -228,6 +228,7 @@ class _EmailPageState extends State<EmailPage> {
                               data:
                                   'MATMSG:TO:$email;SUB:$sublect;BODY:$message;;',
                               type: email,
+                              typeicon: 'assets/iconcustom/email.png',
                             ),
                           ),
                         );

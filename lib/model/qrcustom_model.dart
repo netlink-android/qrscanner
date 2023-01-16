@@ -5,6 +5,7 @@ import 'datetime.dart';
 
 class QrCustomModel {
   late final String data;
+  late final String type;
   late final String image;
   late final String titleType;
   late final String typeicon;
@@ -15,6 +16,7 @@ class QrCustomModel {
   late final bool favorite;
   QrCustomModel({
     required this.data,
+    required this.type,
     required this.image,
     required this.titleType,
     required this.typeicon,
@@ -27,6 +29,7 @@ class QrCustomModel {
   });
   QrCustomModel.fromJson(Map<String, dynamic> json)
       : data = json['data'],
+        type = json['type'],
         image = json['image'],
         titleType = json['titleType'],
         typeicon = json['typeicon'],
@@ -39,6 +42,7 @@ class QrCustomModel {
 
   Map<String, dynamic> toJson() => {
         'data': data,
+        'type': type,
         'image': image,
         'titleType': titleType,
         'typeicon': typeicon,
@@ -52,6 +56,6 @@ class QrCustomModel {
 
   @override
   String toString() {
-    return '{data: $data, image: $image, titleType: $titleType, typeicon: $typeicon, bodyColor: $bodyColor, eyeColor: $eyeColor, bodyvalue: $bodyvalue, eyevalue: $eyevalue,  date: $date, favorite: $favorite}';
+    return '{data: $data,type: $type, image: $image, titleType: $titleType, typeicon: $typeicon, bodyColor: $bodyColor, eyeColor: $eyeColor, bodyvalue: $bodyvalue, eyevalue: $eyevalue,  date: $date, favorite: $favorite}';
   }
 }

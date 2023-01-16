@@ -146,6 +146,7 @@ class _SmsPageState extends State<SmsPage> {
                               titleType: 'SMS',
                               data: 'SMSTO:$phone:$mess',
                               type: phone,
+                               typeicon: 'assets/iconcustom/sms.png',
                             ),
                           ),
                         );

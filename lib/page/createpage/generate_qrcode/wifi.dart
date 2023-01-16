@@ -189,6 +189,7 @@ class _WifiPageState extends State<WifiPage> {
                               data:
                                   'WIFI:S:$networkName;T:$networkType;P:$pass;H:false;;',
                               type: networkName,
+                               typeicon: 'assets/iconcustom/wifi.png',
                             ),
                           ),
                         );

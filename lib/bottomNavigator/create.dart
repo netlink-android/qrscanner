@@ -80,7 +80,7 @@ class _CreatePageState extends State<CreatePage> {
                 CreateCustomPage(type: 'SMS', icontype: 'sms.png'),
                 CreateCustomPage(type: 'V-card', icontype: 'card.png'),
                 CreateCustomPage(type: 'Location', icontype: 'location.png'),
-                CreateCustomPage(type: 'Social', icontype: 'social.png'),
+                // CreateCustomPage(type: 'Social', icontype: 'social.png'),
                 CreateCustomPage(type: 'Custom', icontype: 'add.png'),
               ],
             ),

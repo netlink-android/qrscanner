@@ -137,6 +137,7 @@ class _LocationPageState extends State<LocationPage> {
                               data:
                                   'https://maps.google.com/local?q=$longitude,$latitude',
                               type: 'Latitude: $latitude' + ' - ' + 'Longitude: $longitude',
+                               typeicon: 'assets/iconcustom/location.png',
                             ),
                           ),
                         );
