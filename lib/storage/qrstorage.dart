@@ -17,6 +17,18 @@ class StorageProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  addDataScanner(String datatest) async {
+    if (_storage.read('dataScanner') != null) {
+      _data = _storage.read('dataScanner');
+      _data.insert(0, datatest);
+      _storage.write('dataScanner', _data);
+    } else {
+      _data.insert(0, datatest);
+      _storage.write('dataScanner', _data);
+    }
+    notifyListeners();
+  }
+
   remoceItem(int id) async {
     _data = _storage.read('data');
     await _data.removeAt(id);
@@ -24,6 +36,17 @@ class StorageProvider with ChangeNotifier {
       _storage.write('data', _data);
     } else {
       _storage.remove('data');
+    }
+    notifyListeners();
+  }
+
+  remoceScan(int id) async {
+    _data = _storage.read('dataScanner');
+    await _data.removeAt(id);
+    if (_data.length >= 1) {
+      _storage.write('dataScanner', _data);
+    } else {
+      _storage.remove('dataScanner');
     }
     notifyListeners();
   }

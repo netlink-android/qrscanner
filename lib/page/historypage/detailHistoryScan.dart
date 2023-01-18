@@ -8,81 +8,72 @@ import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:qr_scanner/const.dart';
-import 'package:qr_scanner/main.dart';
+import 'package:qr_scanner/model/datetime.dart';
+import 'package:qr_scanner/page/createpage/create_history/qrcreated_history.dart';
+import 'package:qr_scanner/storage/qrstorage.dart';
 import 'package:share_plus/share_plus.dart';
 
-import '../../../../model/datetime.dart';
 import '../../../../model/qrcustom_model.dart';
-import '../../../../storage/qrstorage.dart';
 
-class DataQrPage extends StatefulWidget {
-  String data = '', type = '', titleType = '', typeicon = '';
-  DataQrPage(
-      {Key? key,
-      required this.titleType,
-      required this.data,
-      required this.type,
-      required this.typeicon})
-      : super(key: key);
+class DetailHistoryScan extends StatefulWidget {
+  int id = 0;
+  String data = '', type = '', image = '', titleType = '', typeicon = '';
+  String shapeColor = '', eyeColor = '';
+  int shapevalue = 1, eyevalue = 1;
+  DateTimeModel dateTimeModel = DateTimeModel('', 0, 0, 0, '');
+  bool favorite = false;
+  DetailHistoryScan({
+    Key? key,
+    required this.id,
+    required this.titleType,
+    required this.data,
+    required this.type,
+    required this.typeicon,
+    required this.image,
+    required this.shapeColor,
+    required this.shapevalue,
+    required this.eyeColor,
+    required this.eyevalue,
+    required this.dateTimeModel,
+    required this.favorite,
+  }) : super(key: key);
 
   @override
-  State<DataQrPage> createState() => _DataQrPageState();
+  State<DetailHistoryScan> createState() => _DetailHistoryScanState();
 }
 
-class _DataQrPageState extends State<DataQrPage> {
-  bool favorite = false;
-  StorageProvider save = StorageProvider();
-  Future<void> addHistoryCustom() async {
-    //store the user entered data in user object
-    //store the user entered data in user object
-    final now = DateTime.now();
-    String dayStr = '';
-    if (now.weekday == DateTime.monday) {
-      dayStr = 'Moday';
-    } else if (now.weekday == DateTime.tuesday) {
-      dayStr = 'Tuesday';
-    } else if (now.weekday == DateTime.wednesday) {
-      dayStr = 'Wednesday';
-    } else if (now.weekday == DateTime.thursday) {
-      dayStr = 'Thursday';
-    } else if (now.weekday == DateTime.friday) {
-      dayStr = 'Friday';
-    } else if (now.weekday == DateTime.saturday) {
-      dayStr = 'Saturday';
-    } else if (now.weekday == DateTime.sunday) {
-      dayStr = 'Sunday';
-    }
-    String time = now.hour.toString() + ':' + now.minute.toString();
-    DateTimeModel date =
-        DateTimeModel(dayStr, now.year, now.month, now.day, time);
-
-    QrCustomModel qrCustomModel = new QrCustomModel(
-        data: widget.data,
-        type: widget.type,
-        image: widget.typeicon,
-        titleType: widget.titleType,
-        typeicon: widget.titleType,
-        bodyColor: black.toString().substring(6, 16),
-        eyeColor: black.toString().substring(6, 16),
-        bodyvalue: 1,
-        eyevalue: 1,
-        date: date,
-        favorite: favorite);
-
-    // encode / convert object into json string
-    String dataQr = jsonEncode(qrCustomModel);
-    print(dataQr);
-    //save the data into sharedPreferences using key-value pairs
-    save.addDataScanner(dataQr);
-    print('oke');
-  }
-
+class _DetailHistoryScanState extends State<DetailHistoryScan> {
+  bool favoritee = false;
+  StorageProvider strSave = StorageProvider();
   @override
   void initState() {
     setState(() {
-      addHistoryCustom();
+      favoritee = widget.favorite;
     });
     super.initState();
+  }
+
+  Future<void> addFavor(int id, QrCustomModel userdata) async {
+    //store the user entered data in user object
+    //store the user entered data in user object
+    QrCustomModel qrCustomModel = new QrCustomModel(
+        data: userdata.data,
+        type: userdata.type,
+        image: userdata.image,
+        titleType: userdata.titleType,
+        typeicon: userdata.typeicon,
+        bodyColor: userdata.bodyColor,
+        eyeColor: userdata.eyeColor,
+        bodyvalue: userdata.eyevalue,
+        eyevalue: userdata.eyevalue,
+        date: userdata.date,
+        favorite: userdata.favorite);
+
+    // encode / convert object into json string
+    String user11 = jsonEncode(qrCustomModel);
+
+    //save the data into sharedPreferences using key-value pairs
+    strSave.addDFavorite(id, user11);
   }
 
   @override
@@ -99,9 +90,12 @@ class _DataQrPageState extends State<DataQrPage> {
                   GestureDetector(
                     onTap: () {
                       setState(() {
-                        Navigator.of(context).push(
-                          new MaterialPageRoute(builder: (ctx) => MainPage()),
-                        );
+                        Navigator.of(context).pop(favoritee);
+                        // Navigator.of(context).push(
+                        //    MaterialPageRoute(
+                        //       builder: (ctx) => QrCreatedHistory()),
+                        // );
+                        // addFo(index, user[index]);
                       });
                     },
                     child: Icon(
@@ -115,32 +109,32 @@ class _DataQrPageState extends State<DataQrPage> {
                         width: 15,
                       ),
                       Text(
-                        'Data',
+                        widget.titleType,
                         style: textType,
                       ),
                     ],
                   ),
-                  Container(),
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  //   child: IconButton(
-                  //       onPressed: () {
-                  //         setState(() {
-                  //           favorite = !favorite;
-                  //           toastFavorite();
-                  //         });
-                  //       },
-                  //       icon: favorite
-                  //           ? Icon(
-                  //               Icons.star,
-                  //               size: 35,
-                  //               color: red,
-                  //             )
-                  //           : Icon(
-                  //               Icons.star_border_outlined,
-                  //               size: 35,
-                  //             )),
-                  // )
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            favoritee = !favoritee;
+
+                            toastFavorite();
+                          });
+                        },
+                        icon: favoritee
+                            ? Icon(
+                                Icons.star,
+                                size: 35,
+                                color: red,
+                              )
+                            : Icon(
+                                Icons.star_border_outlined,
+                                size: 35,
+                              )),
+                  )
                 ],
               ),
             ),
@@ -157,14 +151,49 @@ class _DataQrPageState extends State<DataQrPage> {
                       data: widget.data,
                       version: QrVersions.auto,
                       size: 250,
+                      embeddedImage: widget.titleType == 'Custom'
+                          ? AssetImage(widget.image)
+                          : null,
+                      embeddedImageStyle: QrEmbeddedImageStyle(
+                        size: Size(52, 52),
+                      ),
+                      eyeStyle: QrEyeStyle(
+                          eyeShape: widget.eyevalue == 1
+                              ? QrEyeShape.square
+                              : QrEyeShape.circle,
+                          color: Color(int.parse(widget.eyeColor))),
+                      dataModuleStyle: QrDataModuleStyle(
+                          dataModuleShape: widget.shapevalue == 1
+                              ? QrDataModuleShape.square
+                              : QrDataModuleShape.circle,
+                          color: Color(int.parse(widget.shapeColor))),
+                      errorStateBuilder: (cxt, err) {
+                        return Container(
+                          child: Center(
+                            child: Text(
+                              "Uh oh! Something went wrong...",
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
-                    child: Text(
-                      widget.data,
-                      style: textType.copyWith(fontSize: 18),
-                    ),
+                    child: Text.rich(TextSpan(children: <InlineSpan>[
+                      TextSpan(
+                        text: widget.typeicon + ': ',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      TextSpan(
+                        text: widget.type,
+                        style: TextStyle(
+                          fontSize: 14,
+                        ),
+                      ),
+                    ])),
                   ),
                 ],
               ),
@@ -249,15 +278,41 @@ class _DataQrPageState extends State<DataQrPage> {
   }
 
   void toastFavorite() {
-    if (favorite) {
+    if (favoritee) {
+      // QrCustomModel qrCustomModel = new QrCustomModel(
+      //     data: widget.data,
+      //     type: widget.type,
+      //     image: widget.image,
+      //     titleType: widget.titleType,
+      //     typeicon: widget.typeicon,
+      //     bodyColor: widget.shapeColor,
+      //     eyeColor: widget.eyeColor,
+      //     bodyvalue: widget.eyevalue,
+      //     eyevalue: widget.eyevalue,
+      //     date: widget.dateTimeModel,
+      //     favorite: true);
+      // addFavor(widget.id, qrCustomModel);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("Added to Favorites"),
         duration: Duration(milliseconds: 700),
       ));
     } else {
+      // QrCustomModel qrCustomModel = new QrCustomModel(
+      //     data: widget.data,
+      //     type: widget.type,
+      //     image: widget.image,
+      //     titleType: widget.titleType,
+      //     typeicon: widget.typeicon,
+      //     bodyColor: widget.shapeColor,
+      //     eyeColor: widget.eyeColor,
+      //     bodyvalue: widget.eyevalue,
+      //     eyevalue: widget.eyevalue,
+      //     date: widget.dateTimeModel,
+      //     favorite: false);
+      // addFavor(widget.id, qrCustomModel);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("Deleted to Favorites"),
-        duration: Duration(milliseconds: 700),
+        duration: Duration(milliseconds: 400),
       ));
     }
   }
@@ -270,13 +325,23 @@ class _DataQrPageState extends State<DataQrPage> {
 
     qrValidationResult.status = QrValidationStatus.valid;
     final qrcode = qrValidationResult.qrCode;
-
     final painter = QrPainter.withQr(
-        qr: qrcode!,
-        color: Color(0xfffffffff),
-        embeddedImageStyle: null,
-        emptyColor: black,
-        gapless: true);
+      qr: qrcode!,
+      embeddedImage: null,
+      // embeddedImageStyle: QrEmbeddedImageStyle(
+      //   size: Size.square(60),
+      // ),
+      emptyColor: white,
+      eyeStyle: QrEyeStyle(
+          eyeShape:
+              widget.eyevalue == 1 ? QrEyeShape.square : QrEyeShape.circle,
+          color: Color(int.parse(widget.eyeColor))),
+      dataModuleStyle: QrDataModuleStyle(
+          dataModuleShape: widget.shapevalue == 1
+              ? QrDataModuleShape.square
+              : QrDataModuleShape.circle,
+          color: Color(int.parse(widget.shapeColor))),
+    );
 
     Directory _tempDir = await getTemporaryDirectory();
     String _tempPath = _tempDir.path;

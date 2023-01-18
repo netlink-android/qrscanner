@@ -189,14 +189,16 @@ class _IconQrPageState extends State<IconQrPage> {
                     padding: const EdgeInsets.only(top: 10),
                     child: Text.rich(TextSpan(children: <InlineSpan>[
                       TextSpan(
-                        text: widget.typeicon + ': ',
+                        text: widget.typeicon != 'Icon'
+                            ? widget.typeicon + ': '
+                            : '',
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       TextSpan(
                         text: widget.data,
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 16,
                         ),
                       ),
                     ])),
@@ -287,12 +289,12 @@ class _IconQrPageState extends State<IconQrPage> {
     if (favorite) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("Added to Favorites"),
-        duration: Duration(milliseconds: 400),
+        duration: Duration(milliseconds: 700),
       ));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("Deleted to Favorites"),
-        duration: Duration(milliseconds: 400),
+        duration: Duration(milliseconds: 700),
       ));
     }
   }

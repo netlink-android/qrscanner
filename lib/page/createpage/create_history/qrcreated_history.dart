@@ -59,19 +59,6 @@ class _QrCreatedHistoryState extends State<QrCreatedHistory> {
 
         QrCustomModel userr = QrCustomModel.fromJson(jsondatais);
         qrCustomModel.add(userr);
-        // final setday =
-        //     DateTime(userr.date.year, userr.date.month, userr.date.day);
-
-        // if (int.parse(now.day.toString()) - int.parse(setday.day.toString()) ==
-        //     0) {
-        //   userToday.add(userr);
-        // } else if (int.parse(now.day.toString()) -
-        //         int.parse(setday.day.toString()) ==
-        //     1) {
-        //   userYes.add(userr);
-        // } else {
-        //   user.add(userr);
-        // }
       }
     }
   }

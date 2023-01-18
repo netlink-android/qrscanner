@@ -92,9 +92,10 @@ class _WifiPageState extends State<WifiPage> {
                             style: textType.copyWith(
                                 fontSize: 16,
                                 fontWeight: FontWeight.normal,
-                                color: networkType == 'Network type'
-                                    ? black.withOpacity(0.6)
-                                    : black),
+                                // color: networkType == 'Network type'
+                                //     ? black.withOpacity(0.6)
+                                //     : black
+                                    ),
                           ),
                         ),
                         PopupMenuButton<TypeItem>(

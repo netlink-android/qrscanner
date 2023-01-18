@@ -16,7 +16,7 @@ class ThemeProvider extends ChangeNotifier {
     //   return themeMode == ThemeMode.dark;
     // }
     if (switchData.read('isSwitched') != null) {
-       theme = switchData.read('isSwitched');
+      theme = switchData.read('isSwitched');
       if (theme) {
         return ThemeMode.dark;
       } else {
@@ -40,14 +40,20 @@ class MyThemes {
   static final darkTheme = ThemeData(
     scaffoldBackgroundColor: Colors.grey.shade900,
     primaryColor: Colors.black,
-    colorScheme: ColorScheme.dark(),
+    colorScheme: ColorScheme.dark(
+      surface: Colors.lightBlue,
+    ),
+    primarySwatch: Colors.lightBlue,
     iconTheme: IconThemeData(color: white, opacity: 0.8),
   );
 
   static final lightTheme = ThemeData(
     scaffoldBackgroundColor: Colors.white,
     primaryColor: Colors.white,
-    colorScheme: ColorScheme.light(),
+    colorScheme: ColorScheme.light(
+      primary: Colors.lightBlue,
+    ),
+    primarySwatch: Colors.lightBlue,
     iconTheme: IconThemeData(color: black, opacity: 0.8),
   );
 }

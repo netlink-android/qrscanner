@@ -302,31 +302,10 @@ class _FavoritePageState extends State<FavoritePage> {
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          child: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                Navigator.pop(context);
-                              });
-                            },
-                            icon: Icon(
-                              Icons.arrow_back,
-                              size: 25,
-                            ),
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: blue,
-                            boxShadow: [
-                              BoxShadow(
-                                color: black.withOpacity(0.3),
-                                offset: Offset(1, 2),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Text('Qr Created History', style: textType),
+                        
+                        Text('Favorite', style: textType),
                         Container(
                           child: IconButton(
                             onPressed: () {
