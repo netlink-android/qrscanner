@@ -3,11 +3,8 @@ import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:qr_scanner/model/qrcustom_model.dart';
-import 'package:qr_scanner/page/createpage/generate_qrcode/data/icondata.dart';
 import 'package:qr_scanner/page/createpage/generate_qrcode/data/url_data.dart';
 
 import '../../../const.dart';
@@ -21,15 +18,7 @@ class SocialPage extends StatefulWidget {
 
 class _SocialPageState extends State<SocialPage> {
   TextEditingController texturl = TextEditingController();
-
-  bool _iconOption = false;
-  bool _shapeOption = false;
-  bool _eyeOption = false;
-  String _asseticon = 'assets/iconcustom/iconnew/noicon.png';
-  String _texticon = 'Icon';
-  Color _shapeColor = black;
-  Color _eyeColor = black;
-  int _shapevalue = 1, _eyevalue = 1;
+  final _newValue = "http://";
 
   @override
   void initState() {
@@ -39,20 +28,15 @@ class _SocialPageState extends State<SocialPage> {
       ..addListener(() {
         setState(() {});
       });
-    setState(() {
-      _iconOption = false;
-      _shapeOption = false;
-      _eyeOption = false;
-    });
+    setText(_newValue);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text('Custom'),
+        title: Text('Social'),
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 15.0, left: 8, right: 8),
@@ -62,6 +46,43 @@ class _SocialPageState extends State<SocialPage> {
             Column(
               // mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(12),
+                      height: 100,
+                      width: 100,
+                      decoration: BoxDecoration(
+                          color: blue,
+                          borderRadius: BorderRadius.all(Radius.circular(8))),
+                      child: Image.asset('assets/iconcustom/social.png'),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          print('click');
+                        },
+                        child: Container(
+                          height: 30,
+                          width: 80,
+                          decoration: BoxDecoration(
+                              color: grey.withOpacity(0.5),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8))),
+                          child: Center(
+                            child: Text(
+                              'Open',
+                              style: textType.copyWith(fontSize: 20),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 Container(
                   decoration: BoxDecoration(
                     color: grey.withOpacity(0.5),
@@ -71,12 +92,11 @@ class _SocialPageState extends State<SocialPage> {
                     controller: texturl,
                     decoration: InputDecoration(
                       prefixIcon: Icon(
-                        Icons.social_distance_outlined,
+                        Icons.link,
                       ),
                       suffixIcon: IconButton(
                           onPressed: () {
                             setState(() {
-                              FocusScope.of(context).unfocus();
                               deleteText();
                             });
                           },
@@ -93,570 +113,81 @@ class _SocialPageState extends State<SocialPage> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Container(
-                    height: 55,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: grey),
-                      color: grey.withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          height: 30,
-                          width: 40,
-                          decoration: BoxDecoration(shape: BoxShape.circle),
-                          child: Image.asset(_asseticon),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
-                          child: Text(
-                            _texticon,
-                            style: textType.copyWith(
-                              fontSize: 16,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                        ),
-                        IconButton(
-                            onPressed: () {
-                              setState(() {
-                                _shapeOption = false;
-                                _eyeOption = false;
-                                _iconOption = !_iconOption;
-                              });
-                            },
-                            icon: Icon(Icons.menu))
-                      ],
-                    ),
-                  ),
-                ),
-                AnimatedContainer(
-                  duration: const Duration(milliseconds: 500),
-                  height: _iconOption ? 250 : 0,
-                  child: SingleChildScrollView(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: blue.withOpacity(0.5),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Container(
-                                height: 60,
-                                width: 60,
-                                child: ElevatedButton(
-                                  style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all<Color?>(
-                                              white),
-                                      shape: MaterialStateProperty.all<
-                                              RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                        // side: BorderSide(color: Colors.red)
-                                      ))),
-                                  onPressed: () {
-                                    setState(() {
-                                      _texticon = 'Facebook';
-                                      _asseticon =
-                                          'assets/iconcustom/iconnew/facebook.png';
-                                      _iconOption = false;
-                                    });
-                                  },
-                                  child: Image.asset(
-                                      'assets/iconcustom/iconnew/facebook.png'),
-                                ),
-                              ),
-                              Container(
-                                height: 60,
-                                width: 60,
-                                child: ElevatedButton(
-                                  style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all<Color?>(
-                                              white),
-                                      shape: MaterialStateProperty.all<
-                                              RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                        // side: BorderSide(color: Colors.red)
-                                      ))),
-                                  onPressed: () {
-                                    setState(() {
-                                      _texticon = 'Instagram';
-                                      _asseticon =
-                                          'assets/iconcustom/iconnew/instagram.png';
-                                      _iconOption = false;
-                                    });
-                                  },
-                                  child: Image.asset(
-                                      'assets/iconcustom/iconnew/instagram.png'),
-                                ),
-                              ),
-                              Container(
-                                height: 60,
-                                width: 60,
-                                child: ElevatedButton(
-                                  style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all<Color?>(
-                                              white),
-                                      shape: MaterialStateProperty.all<
-                                              RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                        // side: BorderSide(color: Colors.red)
-                                      ))),
-                                  onPressed: () {
-                                    setState(() {
-                                      _texticon = 'Youtube';
-                                      _asseticon =
-                                          'assets/iconcustom/iconnew/youtube.png';
-                                      _iconOption = false;
-                                    });
-                                  },
-                                  child: Image.asset(
-                                      'assets/iconcustom/iconnew/youtube.png'),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Container(
-                            height: 10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Container(
-                                height: 60,
-                                width: 60,
-                                child: ElevatedButton(
-                                  style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all<Color?>(
-                                              white),
-                                      shape: MaterialStateProperty.all<
-                                              RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                        // side: BorderSide(color: Colors.red)
-                                      ))),
-                                  onPressed: () {
-                                    setState(() {
-                                      _texticon = 'Twiter';
-                                      _asseticon =
-                                          'assets/iconcustom/iconnew/twiter.png';
-                                      _iconOption = false;
-                                    });
-                                  },
-                                  child: Image.asset(
-                                      'assets/iconcustom/iconnew/twiter.png'),
-                                ),
-                              ),
-                              Container(
-                                height: 60,
-                                width: 60,
-                                child: ElevatedButton(
-                                  style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all<Color?>(
-                                              white),
-                                      shape: MaterialStateProperty.all<
-                                              RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                        // side: BorderSide(color: Colors.red)
-                                      ))),
-                                  onPressed: () {
-                                    setState(() {
-                                      _texticon = 'Linkin';
-                                      _asseticon =
-                                          'assets/iconcustom/iconnew/linkin.png';
-                                      _iconOption = false;
-                                    });
-                                  },
-                                  child: Image.asset(
-                                      'assets/iconcustom/iconnew/linkin.png'),
-                                ),
-                              ),
-                              Container(
-                                height: 60,
-                                width: 60,
-                                child: ElevatedButton(
-                                  style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all<Color?>(
-                                              white),
-                                      shape: MaterialStateProperty.all<
-                                              RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                        // side: BorderSide(color: Colors.red)
-                                      ))),
-                                  onPressed: () {
-                                    setState(() {
-                                      _texticon = 'Pinterest';
-                                      _asseticon =
-                                          'assets/iconcustom/iconnew/pinterest.png';
-                                      _iconOption = false;
-                                    });
-                                  },
-                                  child: Image.asset(
-                                      'assets/iconcustom/iconnew/pinterest.png'),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Container(
-                            height: 10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Container(
-                                height: 60,
-                                width: 60,
-                                child: ElevatedButton(
-                                  style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all<Color?>(
-                                              white),
-                                      shape: MaterialStateProperty.all<
-                                              RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                        // side: BorderSide(color: Colors.red)
-                                      ))),
-                                  onPressed: () {
-                                    setState(() {
-                                      _texticon = 'Appstore';
-                                      _asseticon =
-                                          'assets/iconcustom/iconnew/appstore.png';
-                                      _iconOption = false;
-                                    });
-                                  },
-                                  child: Image.asset(
-                                      'assets/iconcustom/iconnew/appstore.png'),
-                                ),
-                              ),
-                              Container(
-                                height: 60,
-                                width: 60,
-                                child: ElevatedButton(
-                                  style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all<Color?>(
-                                              white),
-                                      shape: MaterialStateProperty.all<
-                                              RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                        // side: BorderSide(color: Colors.red)
-                                      ))),
-                                  onPressed: () {
-                                    setState(() {
-                                      _texticon = 'Chplay';
-                                      _asseticon =
-                                          'assets/iconcustom/iconnew/chplay.png';
-                                      _iconOption = false;
-                                    });
-                                  },
-                                  child: Image.asset(
-                                      'assets/iconcustom/iconnew/chplay.png'),
-                                ),
-                              ),
-                              Container(
-                                height: 60,
-                                width: 60,
-                                child: ElevatedButton(
-                                  style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all<Color?>(
-                                              white),
-                                      shape: MaterialStateProperty.all<
-                                              RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                        // side: BorderSide(color: Colors.red)
-                                      ))),
-                                  onPressed: () {
-                                    setState(() {
-                                      _texticon = 'Google';
-                                      _asseticon =
-                                          'assets/iconcustom/iconnew/google.png';
-                                      _iconOption = false;
-                                    });
-                                  },
-                                  child: Image.asset(
-                                      'assets/iconcustom/iconnew/google.png'),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Container(
-                            height: 10,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
+                Container(
+                  height: 10,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      children: [
-                        Container(
-                          height: 40,
-                          width: 180,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: grey),
-                            color: grey.withOpacity(0.5),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(left: 8),
-                                height: 30,
-                                width: 30,
-                                decoration: BoxDecoration(
-                                    shape: _shapevalue == 1
-                                        ? BoxShape.rectangle
-                                        : BoxShape.circle,
-                                    color: _shapeColor),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 10.0),
-                                child: Text(
-                                  'Body color',
-                                  style: textType.copyWith(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                ),
-                              ),
-                              IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      _iconOption = false;
-                                      _shapeOption = !_shapeOption;
-                                    });
-                                  },
-                                  icon: Icon(Icons.menu))
-                            ],
-                          ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: Container(
+                        height: 35,
+                        width: 70,
+                        decoration: BoxDecoration(
+                          color: blue.withOpacity(0.6),
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                        AnimatedContainer(
-                          duration: const Duration(milliseconds: 500),
-                          height: _shapeOption ? 280 : 0,
-                          width: 180,
-                          child: SingleChildScrollView(
-                              child: Container(
-                            decoration: BoxDecoration(
-                              color: blue.withOpacity(0.5),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  height: 8,
-                                ),
-                                Text(
-                                  'Body Color',
-                                  style: textType,
-                                ),
-                                Container(
-                                  height: 8,
-                                ),
-                                SlidePicker(
-                                    showLabel: false,
-                                    sliderSize: Size(160, 30),
-                                    indicatorSize: Size(140, 30),
-                                    pickerColor: _shapeColor,
-                                    onColorChanged: (value) {
-                                      setState(() {
-                                        this._shapeColor = value;
-                                      });
-                                    }),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text('Square'),
-                                        Radio(
-                                            value: 1,
-                                            groupValue: _shapevalue,
-                                            onChanged: (val) {
-                                              setState(() {
-                                                _shapevalue = val!;
-                                              });
-                                            }),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text('Circle'),
-                                        Radio(
-                                            value: 2,
-                                            groupValue: _shapevalue,
-                                            onChanged: (val) {
-                                              setState(() {
-                                                _shapevalue = val!;
-                                              });
-                                            }),
-                                      ],
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          )),
+                        child: Center(
+                          child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  setText('www');
+                                });
+                              },
+                              child: Text(
+                                'www',
+                                style: textType.copyWith(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.normal),
+                              )),
                         ),
-                      ],
+                      ),
                     ),
-                    Column(
-                      children: [
-                        Container(
-                          height: 40,
-                          width: 180,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: grey),
-                            color: grey.withOpacity(0.5),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(left: 8),
-                                height: 30,
-                                width: 30,
-                                decoration: BoxDecoration(
-                                    shape: _eyevalue == 1
-                                        ? BoxShape.rectangle
-                                        : BoxShape.circle,
-                                    color: _eyeColor),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 10.0),
-                                child: Text(
-                                  'Eye Shape',
-                                  style: textType.copyWith(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                ),
-                              ),
-                              IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      _iconOption = false;
-                                      _eyeOption = !_eyeOption;
-                                    });
-                                  },
-                                  icon: Icon(Icons.menu))
-                            ],
-                          ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: Container(
+                        height: 35,
+                        width: 70,
+                        decoration: BoxDecoration(
+                          color: blue.withOpacity(0.6),
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                        AnimatedContainer(
-                          duration: const Duration(milliseconds: 500),
-                          height: _eyeOption ? 280 : 0,
-                          width: 180,
-                          child: SingleChildScrollView(
-                              child: Container(
-                            decoration: BoxDecoration(
-                              color: blue.withOpacity(0.5),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  height: 8,
-                                ),
-                                Text(
-                                  'Eye Color',
-                                  style: textType,
-                                ),
-                                Container(
-                                  height: 8,
-                                ),
-                                SlidePicker(
-                                    showLabel: false,
-                                    sliderSize: Size(160, 30),
-                                    indicatorSize: Size(140, 30),
-                                    pickerColor: _eyeColor,
-                                    onColorChanged: (value) {
-                                      setState(() {
-                                        this._eyeColor = value;
-                                      });
-                                    }),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text('Square'),
-                                        Radio(
-                                            value: 1,
-                                            groupValue: _eyevalue,
-                                            onChanged: (val) {
-                                              setState(() {
-                                                _eyevalue = val!;
-                                              });
-                                            }),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text('Circle'),
-                                        Radio(
-                                            value: 2,
-                                            groupValue: _eyevalue,
-                                            onChanged: (val) {
-                                              setState(() {
-                                                _eyevalue = val!;
-                                              });
-                                            }),
-                                      ],
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          )),
+                        child: Center(
+                          child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  setText('.com');
+                                });
+                              },
+                              child: Text(
+                                '.com',
+                                style: textType.copyWith(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.normal),
+                              )),
                         ),
-                      ],
+                      ),
+                    ),
+                    Container(
+                      height: 35,
+                      width: 70,
+                      decoration: BoxDecoration(
+                        color: blue.withOpacity(0.6),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Center(
+                        child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                setText('.vn');
+                              });
+                            },
+                            child: Text(
+                              '.vn',
+                              style: textType.copyWith(
+                                  fontSize: 20, fontWeight: FontWeight.normal),
+                            )),
+                      ),
                     ),
                   ],
                 ),
@@ -677,15 +208,11 @@ class _SocialPageState extends State<SocialPage> {
                     ? () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (ctx) => IconQrPage(
-                              titleType: 'Custom',
+                            builder: (ctx) => UrlQrPage(
+                              titleType: 'URL',
                               data: texturl.text.toString(),
-                              typeicon: _texticon,
-                              image: _asseticon,
-                              shapeColor: _shapeColor,
-                              shapevalue: _shapevalue,
-                              eyeColor: _eyeColor,
-                              eyevalue: _eyevalue,
+                              type: texturl.text.toString(),
+                              typeicon: 'assets/iconcustom/link.png',
                             ),
                           ),
                         );

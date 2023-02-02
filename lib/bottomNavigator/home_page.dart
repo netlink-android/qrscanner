@@ -427,11 +427,10 @@ class _ScanQrPageState extends State<ScanQrPage> {
                                       )),
                                 ],
                               ),
-                              Center(
-                                  child: Text(
+                              Text(
                                 'Data: $data',
                                 style: textType.copyWith(fontSize: 20),
-                              )),
+                              ),
                             ],
                           ),
                           Row(

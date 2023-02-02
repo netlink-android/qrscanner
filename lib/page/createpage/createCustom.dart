@@ -10,6 +10,7 @@ import 'package:qr_scanner/page/createpage/generate_qrcode/v-card.dart';
 import 'package:qr_scanner/page/createpage/generate_qrcode/wifi.dart';
 
 import '../../const.dart';
+import 'generate_qrcode/calendar.dart';
 import 'generate_qrcode/location.dart';
 
 class CreateCustomPage extends StatefulWidget {
@@ -30,10 +31,11 @@ class _CreateCustomPageState extends State<CreateCustomPage> {
     CallPage(),
     WifiPage(),
     SmsPage(),
-    // VcardPage(),
     LocationPage(),
+    VcardPage(),
+    CalendarPage(),
     SocialPage(),
-    // CustomPageQr(),
+    CustomPageQr(),
   ];
   List<String> _typeQr = [
     'URL',
@@ -42,8 +44,10 @@ class _CreateCustomPageState extends State<CreateCustomPage> {
     'Call',
     'Wifi',
     'SMS',
-    // 'V-card',
     'Location',
+    'V-card',
+    'Calendar',
+    'Social',
     'Custom',
     // 'Custom',
   ];
@@ -84,7 +88,7 @@ class _CreateCustomPageState extends State<CreateCustomPage> {
   }
 
   Widget _pageQr() {
-    int index = 0;
+    int index = 9;
     for (int i = 0; i < _generateQr.length; i++) {
       if (widget.type == _typeQr[i]) {
         index = i;

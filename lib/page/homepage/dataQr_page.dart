@@ -99,9 +99,10 @@ class _DataQrPageState extends State<DataQrPage> {
                   GestureDetector(
                     onTap: () {
                       setState(() {
-                        Navigator.of(context).push(
-                          new MaterialPageRoute(builder: (ctx) => MainPage()),
-                        );
+                        // Navigator.of(context).push(
+                        //   new MaterialPageRoute(builder: (ctx) => MainPage()),
+                        // );
+                        Navigator.of(context).pop(true);
                       });
                     },
                     child: Icon(

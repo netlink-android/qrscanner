@@ -40,9 +40,8 @@ class MyThemes {
   static final darkTheme = ThemeData(
     scaffoldBackgroundColor: Colors.grey.shade900,
     primaryColor: Colors.black,
-    colorScheme: ColorScheme.dark(
-      surface: Colors.lightBlue,
-    ),
+    colorScheme:
+        ColorScheme.dark(surface: Colors.lightBlue, onSecondary: white),
     primarySwatch: Colors.lightBlue,
     iconTheme: IconThemeData(color: white, opacity: 0.8),
   );
@@ -50,9 +49,8 @@ class MyThemes {
   static final lightTheme = ThemeData(
     scaffoldBackgroundColor: Colors.white,
     primaryColor: Colors.white,
-    colorScheme: ColorScheme.light(
-      primary: Colors.lightBlue,
-    ),
+    colorScheme:
+        ColorScheme.light(primary: Colors.lightBlue, onSecondary: white),
     primarySwatch: Colors.lightBlue,
     iconTheme: IconThemeData(color: black, opacity: 0.8),
   );
