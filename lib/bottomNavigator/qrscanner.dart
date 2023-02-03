@@ -22,6 +22,8 @@ class _QrScannerPageState extends State<QrScannerPage> {
   Uint8List? memoryImage;
   String data = '';
   bool codeState = false;
+  String typeScanner = '';
+  List<String> dataScanner = [];
   @override
   void initState() {
     // TODO: implement initState
@@ -112,27 +114,164 @@ class _QrScannerPageState extends State<QrScannerPage> {
                       data = await result.text.toString();
 
                       setState(() {
-                        codeState = true;
+                        // codeState = true;
                       });
                       print(data);
+                      //email
+                      //MATMSG:TO:dungmoi2000@gmail.com;SUB:dd;;BODY:0;;
+                      //mailto:aaaa@gmai.com?subject=dd&body=aaaa
 
-                      //MATMSG:TO:dungmoi2000@gmail.com;SUB:dd;BODY:0;;
+                      //location
+                      //geo:13.73836,51.049259?q=13.73836,51.049259
+                      //https://maps.google.com/local?q=51.049259,13.73836
+
+                      //call
+                      //tel:+78400866487595
+                      //tel:2222222222222222
+
+                      //smss
+                      //SMSTO:+9940866487595:aaaa
+                      //SMSTO:+7940222:aaa
+
+                      //whatsapp
+                      //https://wa.me/784022222/?text=aaaa
+                      //https://wa.me/12420866487595/?text=aaaaaaaaaaaaa
+
+                      //facebook
+                      //https://www.facebook.com/DungCV.2000/
+
+                      //wifi
+                      //WIFI:S:22sss;T:WEP;P:123;;
+                      // WIFI:S:aaa;T:WEP;P:ccccc;H:;
+                      //WIFI:T:WPA;S:hrhrhrhr;P:123456;H:;;
+
+                      //ytb
+                      //https://www.youtube.com/watch?v=GAwoF0zwdoo
+
+                      //skype
+                      //skype:dungcv?chat
+                      //skype:dungcv?call
                       // final splitted = data.split(RegExp(r';'));
                       // print(splitted);
 
-                      // if (data.indexOf('MATMSG') == 0) {
-                      //   print('email');
-                      //   print(splitted[0].substring(10));
-                      //   print(splitted[1].substring(4));
-                      //   print(splitted[2].substring(5));
-                      // } else if (data.indexOf('WIFI') == 0) {
-                      //   print('wifi');
-                      //   print(splitted[0].substring(7));
-                      //   print(splitted[1].substring(2));
-                      //   print(splitted[2].substring(2));
-                      // } else {
-                      //   print('no');
-                      // }
+                      //zoom
+                      //https://zoom.us/j/123456?pwd=55555
+
+                      //v-card
+                      /*I/flutter (31654): BEGIN:VCARD
+I/flutter (31654): VERSION:2.1
+I/flutter (31654): N;CHARSET=UTF-8:can;Dung;;CV
+I/flutter (31654): FN;CHARSET=UTF-8:CV Dung can
+I/flutter (31654): TEL;CELL:+1242456
+I/flutter (31654): TEL;HOME;VOICE:+43123
+I/flutter (31654): ORG;CHARSET=UTF-8:netlini.vn
+I/flutter (31654): TITLE;CHARSET=UTF-8:deve
+I/flutter (31654): TEL;WORK;VOICE:+1242789
+I/flutter (31654): TEL;WORK;FAX:000
+I/flutter (31654): ADR;CHARSET=UTF-8;WORK;PREF:;;phuO;Ha Noi;Thach That;29;VietNam
+I/flutter (31654): EMAIL:d@gmial.com
+I/flutter (31654): URL:http://netlini
+I/flutter (31654): END:VCARD
+I/flutter (31654): BEGIN:VCARD
+I/flutter (31654): VERSION:2.1
+I/flutter (31654): N;CHARSET=UTF-8:can;Dung;;CV
+I/flutter (31654): FN;CHARSET=UTF-8:CV Dung can
+I/flutter (31654): TEL;CELL:+1242456
+I/flutter (31654): TEL;HOME;VOICE:+43123
+I/flutter (31654): ORG;CHARSET=UTF-8:netlini.vn
+I/flutter (31654): TITLE;CHARSET=UTF-8:deve
+I/flutter (31654): TEL;WORK;VOICE:+1242789
+I/flutter (31654): TEL;WORK;FAX:000
+I/flutter (31654): ADR;CHARSET=UTF-8;WORK;PREF:;;phuO;Ha Noi;Thach That;29;VietNam
+I/flutter (31654): EMAIL:d@gmial.com
+I/flutter (31654): URL:http://netlini
+I/flutter (31654): END:VCARD
+*/
+                      if (data.indexOf('MATMSG') == 0) {
+                        print('email');
+                        typeScanner = 'email';
+                        print(extractEmailsFromString(data));
+                        print(data.substring(
+                            data.indexOf('SUB:') + 4, data.indexOf(';BODY:')));
+                        print(data.substring(
+                            data.indexOf(';BODY:') + 6, data.length - 2));
+                      } else if (data.indexOf('mailto') == 0) {
+                        print('email');
+                        typeScanner = 'email';
+                        print(extractEmailsFromString(data));
+                        print(data.substring(data.indexOf('subject=') + 8,
+                            data.indexOf('&body=')));
+                        print(data.substring(data.indexOf('&body=') + 6));
+                      } else if (data.indexOf('tel') == 0) {
+                        print('call');
+                        typeScanner = 'call';
+                        print(data.substring(data.indexOf('tel:') + 4));
+                      } else if (data.indexOf('WIFI') == 0) {
+                        print('wifi');
+                        typeScanner = 'wifi';
+                        if (data.indexOf('WIFI:S:') == 0) {
+                          print('Name: ' +
+                              data.substring(data.indexOf('WIFI:S:') + 7,
+                                  data.indexOf(';T:')));
+                          print(data.substring(
+                              data.indexOf(';T:') + 3, data.indexOf(';P:')));
+                          if (data.indexOf(';H:') > 0) {
+                            print(data.substring(
+                                data.indexOf(';P:') + 3, data.indexOf(';H:')));
+                          } else {
+                            print(data.substring(
+                                data.indexOf(';P:') + 3, data.indexOf(';;')));
+                          }
+                        } else {
+                          print('Name: ' +
+                              data.substring(data.indexOf('WIFI:T:') + 7,
+                                  data.indexOf(';S:')));
+                          print(data.substring(
+                              data.indexOf(';S:') + 3, data.indexOf(';P:')));
+                          print(data.substring(
+                              data.indexOf(';P:') + 3, data.indexOf(';H')));
+                        }
+                      } else if (data.indexOf('geo') == 0 ||
+                          data.indexOf('https://maps.google.com') == 0) {
+                        print('location');
+                        typeScanner = 'location';
+                        print(data.substring(data.indexOf('?q=') + 3));
+                      } else if (data.indexOf('SMSTO') == 0) {
+                        print('SMSTO');
+                        typeScanner = 'SMSTO';
+                        final splitted = data.split(':');
+                        print(splitted[1]);
+                        print(data.substring(7 + splitted[1].length));
+                      } else if (data.indexOf('https://wa.me') == 0) {
+                        print('whatsapp');
+                        typeScanner = 'whatsapp';
+                        print(data.substring(data.indexOf('://wa.me/') + 9,
+                            data.indexOf('/?text=')));
+                        print(data.substring(data.indexOf('/?text=') + 7));
+                      } else if (data.indexOf('https://www.facebook.com') ==
+                          0) {
+                        print('facebook');
+                        typeScanner = 'facebook';
+                      } else if (data.indexOf('https://www.youtube.com') == 0) {
+                        print('ytb');
+                        typeScanner = 'youtube';
+                      } else if (data.indexOf('skype') == 0) {
+                        print('skype');
+                        typeScanner = 'skype';
+                      } else if (data.indexOf('https://zoom.us') == 0) {
+                        print('zoom');
+                        typeScanner = 'zoom';
+                        print(data.substring(
+                            data.indexOf('.us/j/') + 6, data.indexOf('?pwd=')));
+                        print(data.substring(
+                          data.lastIndexOf('?pwd=') + 5,
+                        ));
+                      } else if (data.indexOf('https://') == 0) {
+                        print('link');
+                      } else {
+                        print('no');
+                        typeScanner = 'no';
+                      }
                     },
                   ),
                 ),
@@ -247,5 +386,19 @@ class _QrScannerPageState extends State<QrScannerPage> {
         ],
       ),
     );
+  }
+
+  String extractEmailsFromString(String string) {
+    final emailPattern = RegExp(r'\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b',
+        caseSensitive: false, multiLine: true);
+    final matches = emailPattern.allMatches(string);
+    List<String> emails = [];
+    if (matches != null) {
+      for (final Match match in matches) {
+        emails.add(string.substring(match.start, match.end));
+      }
+    }
+
+    return emails[0];
   }
 }
