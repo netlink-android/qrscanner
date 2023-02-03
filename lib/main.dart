@@ -60,6 +60,7 @@ class _MainPageState extends State<MainPage> {
         child: SafeArea(child: currenScreen),
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: "btnScan",
         enableFeedback: false,
         backgroundColor: blue,
         onPressed: () {

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_zxing/flutter_zxing.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:qr_scanner/page/homepage/email_scan.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../const.dart';
@@ -38,6 +39,7 @@ class _QrScannerPageState extends State<QrScannerPage> {
         defaultTargetPlatform == TargetPlatform.android;
     return Scaffold(
       floatingActionButton: FloatingActionButton(
+        heroTag: "btnImage",
         onPressed: () async {
           final picker = ImagePicker();
           final pickedFile = await picker.getImage(source: ImageSource.gallery);
@@ -114,7 +116,7 @@ class _QrScannerPageState extends State<QrScannerPage> {
                       data = await result.text.toString();
 
                       setState(() {
-                        // codeState = true;
+                        codeState = true;
                       });
                       print(data);
                       //email
@@ -347,12 +349,7 @@ I/flutter (31654): END:VCARD
                                     onPressed: () async {
                                       final resu = await Navigator.of(context)
                                           .push(MaterialPageRoute(
-                                              builder: (ctx) => DataQrPage(
-                                                  titleType: 'Data',
-                                                  data: data,
-                                                  type: data,
-                                                  typeicon:
-                                                      'assets/iconcustom/iconnew/noicon.png')));
+                                              builder: (ctx) => EmailScan()));
                                       if (resu != null) {
                                         setState(() {
                                           codeState = false;
