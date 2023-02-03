@@ -197,6 +197,11 @@ I/flutter (31654): END:VCARD
                             data.indexOf('SUB:') + 4, data.indexOf(';BODY:')));
                         print(data.substring(
                             data.indexOf(';BODY:') + 6, data.length - 2));
+                        dataScanner.add(extractEmailsFromString(data));
+                        dataScanner.add(data.substring(
+                            data.indexOf('SUB:') + 4, data.indexOf(';BODY:')));
+                        dataScanner.add(data.substring(
+                            data.indexOf(';BODY:') + 6, data.length - 2));
                       } else if (data.indexOf('mailto') == 0) {
                         print('email');
                         typeScanner = 'email';
@@ -349,7 +354,9 @@ I/flutter (31654): END:VCARD
                                     onPressed: () async {
                                       final resu = await Navigator.of(context)
                                           .push(MaterialPageRoute(
-                                              builder: (ctx) => EmailScan()));
+                                              builder: (ctx) => EmailScan(
+                                                    data: dataScanner,
+                                                  )));
                                       if (resu != null) {
                                         setState(() {
                                           codeState = false;

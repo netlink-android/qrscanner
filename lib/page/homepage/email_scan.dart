@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import '../../const.dart';
 
 class EmailScan extends StatefulWidget {
-  const EmailScan({super.key});
+  List<String> data = [];
+  EmailScan({
+    Key? key,
+    required this.data,
+  }) : super(key: key);
 
   @override
   State<EmailScan> createState() => _EmailScanState();
@@ -38,10 +42,13 @@ class _EmailScanState extends State<EmailScan> {
                   Row(
                     children: [
                       Container(
-                        width: 15,
+                        child: Icon(Icons.email, size: 30),
+                      ),
+                      Container(
+                        width: 5,
                       ),
                       Text(
-                        'Data',
+                        'Email',
                         style: textType,
                       ),
                     ],
@@ -93,19 +100,19 @@ class _EmailScanState extends State<EmailScan> {
                           Text(
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            'dungmoi2000@gmail.com',
+                            widget.data[0],
                             style: textType.copyWith(
                                 fontSize: 18, fontWeight: FontWeight.w400),
                           ),
                           Text(
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            'hhheee',
+                            widget.data[1],
                             style: textType.copyWith(
                                 fontSize: 18, fontWeight: FontWeight.w400),
                           ),
                           Text(
-                            'kakakddddddddddddddddddddddddddđ',
+                            widget.data[2],
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: textType.copyWith(
