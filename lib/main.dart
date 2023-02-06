@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_scanner/bottomNavigator/qrscanner.dart';
 import 'package:qr_scanner/const.dart';
 import 'package:qr_scanner/bottomNavigator/create.dart';

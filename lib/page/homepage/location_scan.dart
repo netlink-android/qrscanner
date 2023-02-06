@@ -8,18 +8,18 @@ import '../../model/datetime.dart';
 import '../../model/qrcustom_model.dart';
 import '../../storage/qrstorage.dart';
 
-class EmailScan extends StatefulWidget {
+class LocationScan extends StatefulWidget {
   List<String> data = [];
-  EmailScan({
+  LocationScan({
     Key? key,
     required this.data,
   }) : super(key: key);
 
   @override
-  State<EmailScan> createState() => _EmailScanState();
+  State<LocationScan> createState() => _LocationScanState();
 }
 
-class _EmailScanState extends State<EmailScan> {
+class _LocationScanState extends State<LocationScan> {
   StorageProvider save = StorageProvider();
   Future<void> addHistoryCustom() async {
     //store the user entered data in user object
@@ -47,11 +47,12 @@ class _EmailScanState extends State<EmailScan> {
 
     QrCustomModel qrCustomModel = new QrCustomModel(
         data:
-            'MATMSG:TO:${widget.data[0]};SUB:${widget.data[1]};BODY:${widget.data[2]};;',
-        type: widget.data[0],
-        image: 'assets/iconcustom/email.png',
-        titleType: 'Email',
-        typeicon: 'Email',
+            'https://maps.google.com/local?q=${widget.data[0]},${widget.data[1]}',
+        type:
+            'Latitude: ${widget.data[0].substring(0, widget.data[0].indexOf('.') + 3)}, Longitude: ${widget.data[1].substring(0, widget.data[1].indexOf('.') + 3)}',
+        image: 'assets/iconcustom/location.png',
+        titleType: 'Location',
+        typeicon: 'Location',
         bodyColor: black.toString().substring(6, 16),
         eyeColor: black.toString().substring(6, 16),
         bodyvalue: 1,
@@ -102,13 +103,13 @@ class _EmailScanState extends State<EmailScan> {
                   Row(
                     children: [
                       Container(
-                        child: Icon(Icons.email, size: 30),
+                        child: Icon(Icons.location_on, size: 30),
                       ),
                       Container(
                         width: 5,
                       ),
                       Text(
-                        'Email',
+                        'Location',
                         style: textType,
                       ),
                     ],
@@ -118,7 +119,7 @@ class _EmailScanState extends State<EmailScan> {
               ),
             ),
             Container(
-              height: 250,
+              height: 150,
               width: double.infinity,
               color: blue.withOpacity(0.3),
               child: Row(
@@ -128,21 +129,17 @@ class _EmailScanState extends State<EmailScan> {
                   Padding(
                     padding: const EdgeInsets.all(10),
                     child: Container(
-                      width: MediaQuery.of(context).size.width * 0.2,
+                      width: MediaQuery.of(context).size.width * 0.35,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            'To:',
+                            'Latitude:',
                             style: textType.copyWith(fontSize: 18),
                           ),
                           Text(
-                            'Subject:',
-                            style: textType.copyWith(fontSize: 18),
-                          ),
-                          Text(
-                            'Content:',
+                            'Longitude:',
                             style: textType.copyWith(fontSize: 18),
                           ),
                         ],
@@ -152,7 +149,7 @@ class _EmailScanState extends State<EmailScan> {
                   Padding(
                     padding: const EdgeInsets.all(10),
                     child: Container(
-                      width: MediaQuery.of(context).size.width * 0.6,
+                      width: MediaQuery.of(context).size.width * 0.5,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,21 +157,14 @@ class _EmailScanState extends State<EmailScan> {
                           Text(
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            widget.data[0].isNotEmpty ? widget.data[0] : '',
+                            widget.data[0],
                             style: textType.copyWith(
                                 fontSize: 18, fontWeight: FontWeight.w400),
                           ),
                           Text(
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            widget.data[1].isNotEmpty ? widget.data[1] : '',
-                            style: textType.copyWith(
-                                fontSize: 18, fontWeight: FontWeight.w400),
-                          ),
-                          Text(
-                            widget.data[2].isNotEmpty ? widget.data[2] : '',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                            widget.data[1],
                             style: textType.copyWith(
                                 fontSize: 18, fontWeight: FontWeight.w400),
                           ),
@@ -209,12 +199,13 @@ class _EmailScanState extends State<EmailScan> {
                                 ))),
                             onPressed: () {
                               launch(
-                                  'mailto:${widget.data[0]}?subject=${widget.data[1]}&body=${widget.data[2]}');
+                                  'https://maps.google.com/local?q=${widget.data[0]},${widget.data[1]}');
                             },
-                            child: Image.asset('assets/iconcustom/email.png')),
+                            child:
+                                Image.asset('assets/iconcustom/location.png')),
                       ),
                       Text(
-                        'Send email',
+                        'Location Map',
                         style: textType.copyWith(fontSize: 18),
                       )
                     ],

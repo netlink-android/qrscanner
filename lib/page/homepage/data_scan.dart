@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../const.dart';
@@ -8,18 +9,18 @@ import '../../model/datetime.dart';
 import '../../model/qrcustom_model.dart';
 import '../../storage/qrstorage.dart';
 
-class EmailScan extends StatefulWidget {
+class DataScan extends StatefulWidget {
   List<String> data = [];
-  EmailScan({
+  DataScan({
     Key? key,
     required this.data,
   }) : super(key: key);
 
   @override
-  State<EmailScan> createState() => _EmailScanState();
+  State<DataScan> createState() => _DataScanState();
 }
 
-class _EmailScanState extends State<EmailScan> {
+class _DataScanState extends State<DataScan> {
   StorageProvider save = StorageProvider();
   Future<void> addHistoryCustom() async {
     //store the user entered data in user object
@@ -46,12 +47,11 @@ class _EmailScanState extends State<EmailScan> {
         DateTimeModel(dayStr, now.year, now.month, now.day, time);
 
     QrCustomModel qrCustomModel = new QrCustomModel(
-        data:
-            'MATMSG:TO:${widget.data[0]};SUB:${widget.data[1]};BODY:${widget.data[2]};;',
+        data: widget.data[0],
         type: widget.data[0],
-        image: 'assets/iconcustom/email.png',
-        titleType: 'Email',
-        typeicon: 'Email',
+        image: 'assets/iconcustom/text.png',
+        titleType: 'Data',
+        typeicon: 'Data',
         bodyColor: black.toString().substring(6, 16),
         eyeColor: black.toString().substring(6, 16),
         bodyvalue: 1,
@@ -101,14 +101,8 @@ class _EmailScanState extends State<EmailScan> {
                   ),
                   Row(
                     children: [
-                      Container(
-                        child: Icon(Icons.email, size: 30),
-                      ),
-                      Container(
-                        width: 5,
-                      ),
                       Text(
-                        'Email',
+                        'Data',
                         style: textType,
                       ),
                     ],
@@ -118,7 +112,7 @@ class _EmailScanState extends State<EmailScan> {
               ),
             ),
             Container(
-              height: 250,
+              height: 150,
               width: double.infinity,
               color: blue.withOpacity(0.3),
               child: Row(
@@ -134,15 +128,7 @@ class _EmailScanState extends State<EmailScan> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            'To:',
-                            style: textType.copyWith(fontSize: 18),
-                          ),
-                          Text(
-                            'Subject:',
-                            style: textType.copyWith(fontSize: 18),
-                          ),
-                          Text(
-                            'Content:',
+                            'Data:',
                             style: textType.copyWith(fontSize: 18),
                           ),
                         ],
@@ -152,29 +138,16 @@ class _EmailScanState extends State<EmailScan> {
                   Padding(
                     padding: const EdgeInsets.all(10),
                     child: Container(
-                      width: MediaQuery.of(context).size.width * 0.6,
+                      width: MediaQuery.of(context).size.width * 0.65,
+                      margin: EdgeInsets.only(top: 55),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            maxLines: 1,
+                            maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            widget.data[0].isNotEmpty ? widget.data[0] : '',
-                            style: textType.copyWith(
-                                fontSize: 18, fontWeight: FontWeight.w400),
-                          ),
-                          Text(
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            widget.data[1].isNotEmpty ? widget.data[1] : '',
-                            style: textType.copyWith(
-                                fontSize: 18, fontWeight: FontWeight.w400),
-                          ),
-                          Text(
-                            widget.data[2].isNotEmpty ? widget.data[2] : '',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                            widget.data[0],
                             style: textType.copyWith(
                                 fontSize: 18, fontWeight: FontWeight.w400),
                           ),
@@ -208,13 +181,22 @@ class _EmailScanState extends State<EmailScan> {
                                   // side: BorderSide(color: Colors.red)
                                 ))),
                             onPressed: () {
-                              launch(
-                                  'mailto:${widget.data[0]}?subject=${widget.data[1]}&body=${widget.data[2]}');
+                              Clipboard.setData(
+                                  new ClipboardData(text: widget.data[0]));
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                duration: Duration(seconds: 1),
+                                content: Text("Copy text"),
+                              ));
                             },
-                            child: Image.asset('assets/iconcustom/email.png')),
+                            child: Icon(
+                              Icons.copy,
+                              color: black,
+                              size: 35,
+                            )),
                       ),
                       Text(
-                        'Send email',
+                        'Copy',
                         style: textType.copyWith(fontSize: 18),
                       )
                     ],
