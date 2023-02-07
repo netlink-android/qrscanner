@@ -180,7 +180,9 @@ class _DetailHistoryScanState extends State<DetailHistoryScan> {
                     ),
                   ),
                   Padding(
-                      padding: const EdgeInsets.only(top: 10),
+                      padding: const EdgeInsets.only(
+                        top: 10,
+                      ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -190,12 +192,15 @@ class _DetailHistoryScanState extends State<DetailHistoryScan> {
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),
-                          Text(
-                            widget.type,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 14,
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.6,
+                            child: Text(
+                              widget.type,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
                             ),
                           ),
                         ],

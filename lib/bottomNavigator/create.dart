@@ -80,20 +80,24 @@ class _CreatePageState extends State<CreatePage> {
                 CreateCustomPage(type: 'SMS', icontype: 'sms.png'),
 
                 CreateCustomPage(type: 'Location', icontype: 'location.png'),
-                CreateCustomPage(type: 'V-card', icontype: 'card.png'),
-                CreateCustomPage(type: 'Calendar', icontype: 'calendar.png'),
+                // CreateCustomPage(type: 'V-card', icontype: 'card.png'),
+                // CreateCustomPage(type: 'Calendar', icontype: 'calendar.png'),
                 CreateCustomPage(
                     type: 'Facebook', icontype: 'iconnew/facebook.png'),
                 CreateCustomPage(
                     type: 'Instagram', icontype: 'iconnew/instagram.png'),
                 CreateCustomPage(
                     type: 'Twitter', icontype: 'iconnew/twiter.png'),
+                    CreateCustomPage(
+                    type: 'Skype', icontype: 'iconnew/skype.png'),
                 CreateCustomPage(
                     type: 'Linkin', icontype: 'iconnew/linkin.png'),
                 CreateCustomPage(
                     type: 'Whatsapp', icontype: 'iconnew/whatsapp.png'),
                 CreateCustomPage(
                     type: 'Youtube', icontype: 'iconnew/youtube.png'),
+                    CreateCustomPage(
+                    type: 'Zoom', icontype: 'iconnew/zoom.png'),
 
                 CreateCustomPage(
                     type: 'Spotify', icontype: 'iconnew/spotify.png'),

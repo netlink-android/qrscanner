@@ -252,12 +252,22 @@ class _FavoritePageState extends State<FavoritePage> {
                                                         CrossAxisAlignment
                                                             .start,
                                                     children: [
-                                                      Text(
-                                                        qrCustomModel[index]
-                                                            .type,
-                                                        style:
-                                                            textType.copyWith(
-                                                                fontSize: 16),
+                                                      Container(
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.75,
+                                                        child: Text(
+                                                          qrCustomModel[index]
+                                                              .type,
+                                                          maxLines: 1,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style:
+                                                              textType.copyWith(
+                                                                  fontSize: 16),
+                                                        ),
                                                       ),
                                                       Text(
                                                         qrCustomModel[index]
@@ -304,7 +314,6 @@ class _FavoritePageState extends State<FavoritePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        
                         Text('Favorite', style: textType),
                         Container(
                           child: IconButton(

@@ -117,6 +117,7 @@ class _QrScannerPageState extends State<QrScannerPage> {
       print('zoom');
       typeScanner = 'zoom';
       dataScanner.add(data);
+      dataScanner.add(typeScanner);
       // dataScanner.add(data.substring(
       //     data.indexOf('.us/j/') + 6, data.indexOf('?pwd=')));
       // dataScanner.add(data.substring(

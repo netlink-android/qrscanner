@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 
@@ -12,13 +13,13 @@ class SettingPage extends StatefulWidget {
   State<SettingPage> createState() => _SettingPageState();
 }
 
-enum MenuItem { Vietnames, English, Phap }
+enum MenuItem { Beep, Vibrate, Silent }
 
 class _SettingPageState extends State<SettingPage> {
   final switchData = GetStorage();
   bool isSwitched = false;
 
-  String valueLanguage = 'English';
+  String valueLanguage = 'Vibrate';
   @override
   void initState() {
     super.initState();
@@ -46,7 +47,7 @@ class _SettingPageState extends State<SettingPage> {
           Text(
             'General Setting',
             style: textType.copyWith(
-                color: blue, fontSize: 18, fontWeight: FontWeight.normal),
+                color: blue, fontSize: 18, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 10),
           Padding(
@@ -65,7 +66,7 @@ class _SettingPageState extends State<SettingPage> {
                     Row(
                       children: [
                         Text(
-                          'Dark',
+                          'Dark mode',
                           style: textType.copyWith(
                               fontSize: 16, fontWeight: FontWeight.normal),
                         ),
@@ -106,7 +107,7 @@ class _SettingPageState extends State<SettingPage> {
                     Row(
                       children: [
                         Text(
-                          'Language',
+                          'Sound',
                           style: textType.copyWith(
                               fontSize: 16, fontWeight: FontWeight.normal),
                         ),
@@ -117,7 +118,7 @@ class _SettingPageState extends State<SettingPage> {
                         Text(
                           valueLanguage,
                           style: textType.copyWith(
-                              fontSize: 16, fontWeight: FontWeight.normal),
+                              fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                         PopupMenuButton<MenuItem>(
                             onSelected: (value) {
@@ -132,16 +133,28 @@ class _SettingPageState extends State<SettingPage> {
                             },
                             itemBuilder: (context) => const [
                                   PopupMenuItem(
-                                    value: MenuItem.Vietnames,
-                                    child: Text('VietName'),
+                                    value: MenuItem.Beep,
+                                    child: Text(
+                                      'Beep',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
                                   ),
                                   PopupMenuItem(
-                                    value: MenuItem.English,
-                                    child: Text('English'),
+                                    value: MenuItem.Vibrate,
+                                    child: Text(
+                                      'Vibrate',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
                                   ),
                                   PopupMenuItem(
-                                    value: MenuItem.Phap,
-                                    child: Text('Phap'),
+                                    value: MenuItem.Silent,
+                                    child: Text(
+                                      'Silent',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
                                   ),
                                 ])
                       ],
@@ -157,51 +170,62 @@ class _SettingPageState extends State<SettingPage> {
           Text(
             'Help',
             style: textType.copyWith(
-                color: blue, fontSize: 18, fontWeight: FontWeight.normal),
+                color: blue, fontSize: 18, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
-            child: Container(
-              height: 50,
-              decoration: BoxDecoration(
-                color: grey.withOpacity(0.5),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'FAQ',
-                      style: textType.copyWith(
-                          fontSize: 16, fontWeight: FontWeight.normal),
-                    ),
-                  ],
+            child: GestureDetector(
+              onTap: () {
+                print('FAQ');
+                HapticFeedback.vibrate();
+              },
+              child: Container(
+                height: 50,
+                decoration: BoxDecoration(
+                  color: grey.withOpacity(0.5),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'FAQ',
+                        style: textType.copyWith(
+                            fontSize: 16, fontWeight: FontWeight.normal),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
-            child: Container(
-              height: 50,
-              decoration: BoxDecoration(
-                color: grey.withOpacity(0.5),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Language',
-                      style: textType.copyWith(
-                          fontSize: 16, fontWeight: FontWeight.normal),
-                    ),
-                  ],
+            child: GestureDetector(
+              onTap: () {
+                print('Policy');
+              },
+              child: Container(
+                height: 50,
+                decoration: BoxDecoration(
+                  color: grey.withOpacity(0.5),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Privacy policy',
+                        style: textType.copyWith(
+                            fontSize: 16, fontWeight: FontWeight.normal),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -211,46 +235,56 @@ class _SettingPageState extends State<SettingPage> {
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
-            child: Container(
-              height: 50,
-              decoration: BoxDecoration(
-                color: grey.withOpacity(0.5),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Share App',
-                      style: textType.copyWith(
-                          fontSize: 16, fontWeight: FontWeight.normal),
-                    ),
-                  ],
+            child: GestureDetector(
+              onTap: () {
+                print('Share');
+              },
+              child: Container(
+                height: 50,
+                decoration: BoxDecoration(
+                  color: grey.withOpacity(0.5),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Share App',
+                        style: textType.copyWith(
+                            fontSize: 16, fontWeight: FontWeight.normal),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
-            child: Container(
-              height: 50,
-              decoration: BoxDecoration(
-                color: grey.withOpacity(0.5),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Rate App',
-                      style: textType.copyWith(
-                          fontSize: 16, fontWeight: FontWeight.normal),
-                    ),
-                  ],
+            child: GestureDetector(
+              onTap: () {
+                print('Rate App');
+              },
+              child: Container(
+                height: 50,
+                decoration: BoxDecoration(
+                  color: grey.withOpacity(0.5),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Rate App',
+                        style: textType.copyWith(
+                            fontSize: 16, fontWeight: FontWeight.normal),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

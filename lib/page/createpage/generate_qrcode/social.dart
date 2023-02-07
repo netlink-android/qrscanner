@@ -10,7 +10,8 @@ import 'package:qr_scanner/page/createpage/generate_qrcode/data/url_data.dart';
 import '../../../const.dart';
 
 class SocialPage extends StatefulWidget {
-  const SocialPage({super.key});
+  String typeImage = 'social';
+  SocialPage({Key? key, required this.typeImage}) : super(key: key);
 
   @override
   State<SocialPage> createState() => _SocialPageState();
@@ -36,7 +37,9 @@ class _SocialPageState extends State<SocialPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Social'),
+        title: Text(
+          widget.typeImage,
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 15.0, left: 8, right: 8),
@@ -46,42 +49,18 @@ class _SocialPageState extends State<SocialPage> {
             Column(
               // mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(12),
-                      height: 100,
-                      width: 100,
-                      decoration: BoxDecoration(
-                          color: blue,
-                          borderRadius: BorderRadius.all(Radius.circular(8))),
-                      child: Image.asset('assets/iconcustom/social.png'),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: GestureDetector(
-                        onTap: () {
-                          print('click');
-                        },
-                        child: Container(
-                          height: 30,
-                          width: 80,
-                          decoration: BoxDecoration(
-                              color: grey.withOpacity(0.5),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8))),
-                          child: Center(
-                            child: Text(
-                              'Open',
-                              style: textType.copyWith(fontSize: 20),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Container(
+                    padding: EdgeInsets.all(12),
+                    height: 100,
+                    width: 100,
+                    decoration: BoxDecoration(
+                        color: blue,
+                        borderRadius: BorderRadius.all(Radius.circular(8))),
+                    child: Image.asset(
+                        'assets/iconcustom/iconnew/${widget.typeImage.toLowerCase()}.png'),
+                  ),
                 ),
                 Container(
                   decoration: BoxDecoration(
@@ -131,11 +110,11 @@ class _SocialPageState extends State<SocialPage> {
                           child: GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  setText('www');
+                                  setText('www.');
                                 });
                               },
                               child: Text(
-                                'www',
+                                'www.',
                                 style: textType.copyWith(
                                     fontSize: 20,
                                     fontWeight: FontWeight.normal),
@@ -170,7 +149,7 @@ class _SocialPageState extends State<SocialPage> {
                     ),
                     Container(
                       height: 35,
-                      width: 70,
+                      width: 130,
                       decoration: BoxDecoration(
                         color: blue.withOpacity(0.6),
                         borderRadius: BorderRadius.circular(12),
@@ -179,11 +158,11 @@ class _SocialPageState extends State<SocialPage> {
                         child: GestureDetector(
                             onTap: () {
                               setState(() {
-                                setText('.vn');
+                                setText(widget.typeImage.toLowerCase() + '.');
                               });
                             },
                             child: Text(
-                              '.vn',
+                              widget.typeImage.toLowerCase() + '.',
                               style: textType.copyWith(
                                   fontSize: 20, fontWeight: FontWeight.normal),
                             )),

@@ -41,7 +41,7 @@ class MyThemes {
     scaffoldBackgroundColor: Colors.grey.shade900,
     primaryColor: Colors.black,
     colorScheme:
-        ColorScheme.dark(surface: Colors.lightBlue, onSecondary: white),
+        ColorScheme.dark(surface: Colors.lightBlue, onSecondary: white, primaryVariant:  white,  ),
     primarySwatch: Colors.lightBlue,
     iconTheme: IconThemeData(color: white, opacity: 0.8),
   );
@@ -50,7 +50,7 @@ class MyThemes {
     scaffoldBackgroundColor: Colors.white,
     primaryColor: Colors.white,
     colorScheme:
-        ColorScheme.light(primary: Colors.lightBlue, onSecondary: white),
+        ColorScheme.light(primary: Colors.lightBlue, onSecondary: white, secondaryVariant:  black),
     primarySwatch: Colors.lightBlue,
     iconTheme: IconThemeData(color: black, opacity: 0.8),
   );

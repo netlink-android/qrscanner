@@ -134,7 +134,7 @@ class _TextUrlScanState extends State<TextUrlScan> {
               ),
             ),
             Container(
-              height: 150,
+              height: 170,
               width: double.infinity,
               color: blue.withOpacity(0.3),
               child: Row(
@@ -144,13 +144,15 @@ class _TextUrlScanState extends State<TextUrlScan> {
                   Padding(
                     padding: const EdgeInsets.all(10),
                     child: Container(
-                      width: MediaQuery.of(context).size.width * 0.2,
+                      width: MediaQuery.of(context).size.width * 0.35,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            'Url:',
+                            widget.data[1] == 'link'
+                                ? 'Link url:'
+                                : 'Link ' + widget.data[1] + ':',
                             style: textType.copyWith(fontSize: 18),
                           ),
                         ],
@@ -160,18 +162,18 @@ class _TextUrlScanState extends State<TextUrlScan> {
                   Padding(
                     padding: const EdgeInsets.all(10),
                     child: Container(
-                      width: MediaQuery.of(context).size.width * 0.65,
-                      margin: EdgeInsets.only(top: 55),
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      margin: EdgeInsets.only(top: 60),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            maxLines: 2,
+                            maxLines: 4,
                             overflow: TextOverflow.ellipsis,
                             widget.data[0],
                             style: textType.copyWith(
-                                fontSize: 18, fontWeight: FontWeight.w400),
+                                fontSize: 16, fontWeight: FontWeight.w400),
                           ),
                         ],
                       ),

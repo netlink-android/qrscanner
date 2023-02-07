@@ -8,6 +8,7 @@ import 'package:qr_scanner/page/createpage/generate_qrcode/text.dart';
 import 'package:qr_scanner/page/createpage/generate_qrcode/url.dart';
 import 'package:qr_scanner/page/createpage/generate_qrcode/v-card.dart';
 import 'package:qr_scanner/page/createpage/generate_qrcode/wifi.dart';
+import 'package:qr_scanner/page/createpage/generate_qrcode/zoom.dart';
 
 import '../../const.dart';
 import 'generate_qrcode/calendar.dart';
@@ -24,33 +25,6 @@ class CreateCustomPage extends StatefulWidget {
 }
 
 class _CreateCustomPageState extends State<CreateCustomPage> {
-  List<Widget> _generateQr = [
-    UrlPage(),
-    EmailPage(),
-    TextPage(),
-    CallPage(),
-    WifiPage(),
-    SmsPage(),
-    LocationPage(),
-    VcardPage(),
-    CalendarPage(),
-    SocialPage(),
-    CustomPageQr(),
-  ];
-  List<String> _typeQr = [
-    'URL',
-    'Email',
-    'Text',
-    'Call',
-    'Wifi',
-    'SMS',
-    'Location',
-    'V-card',
-    'Calendar',
-    'Social',
-    'Custom',
-    // 'Custom',
-  ];
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -88,7 +62,38 @@ class _CreateCustomPageState extends State<CreateCustomPage> {
   }
 
   Widget _pageQr() {
-    int index = 9;
+    List<Widget> _generateQr = [
+      UrlPage(),
+      EmailPage(),
+      TextPage(),
+      CallPage(),
+      WifiPage(),
+      SmsPage(),
+      LocationPage(),
+      // VcardPage(),
+      // CalendarPage(),
+      ZoomPage(),
+      SocialPage(typeImage: widget.type),
+      CustomPageQr(),
+    ];
+
+    List<String> _typeQr = [
+      'URL',
+      'Email',
+      'Text',
+      'Call',
+      'Wifi',
+      'SMS',
+      'Location',
+      // 'V-card',
+      // 'Calendar',
+      'Zoom',
+      'Social',
+      
+      'Custom',
+      // 'Custom',
+    ];
+    int index = 8;
     for (int i = 0; i < _generateQr.length; i++) {
       if (widget.type == _typeQr[i]) {
         index = i;

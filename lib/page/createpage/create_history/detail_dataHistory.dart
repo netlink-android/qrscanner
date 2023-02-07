@@ -182,21 +182,31 @@ class _DetailDataHistoryState extends State<DetailDataHistory> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Text.rich(TextSpan(children: <InlineSpan>[
-                      TextSpan(
-                        text: widget.typeicon + ': ',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                      padding: const EdgeInsets.only(
+                        top: 10,
                       ),
-                      TextSpan(
-                        text: widget.type,
-                        style: TextStyle(
-                          fontSize: 14,
-                        ),
-                      ),
-                    ])),
-                  ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            widget.typeicon + ': ',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.6,
+                            child: Text(
+                              widget.type,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ],
+                      )),
                 ],
               ),
             ),
