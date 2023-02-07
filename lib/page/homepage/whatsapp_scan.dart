@@ -41,7 +41,12 @@ class _WhatsAppScanState extends State<WhatsAppScan> {
     } else if (now.weekday == DateTime.sunday) {
       dayStr = 'Sunday';
     }
-    String time = now.hour.toString() + ':' + now.minute.toString();
+    String our =
+        now.hour < 10 ? '0' + now.hour.toString() : now.hour.toString();
+    String minu =
+        now.minute < 10 ? '0' + now.minute.toString() : now.minute.toString();
+
+    String time = our + ':' + minu;
     DateTimeModel date =
         DateTimeModel(dayStr, now.year, now.month, now.day, time);
 
@@ -72,6 +77,7 @@ class _WhatsAppScanState extends State<WhatsAppScan> {
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -198,8 +204,8 @@ class _WhatsAppScanState extends State<WhatsAppScan> {
                               launch(
                                   'https://wa.me/${widget.data[0]}/?text=${widget.data[1]}');
                             },
-                            child:
-                                Image.asset('assets/iconcustom/iconnew/whatsapp.png')),
+                            child: Image.asset(
+                                'assets/iconcustom/iconnew/whatsapp.png')),
                       ),
                       Text(
                         'Open',

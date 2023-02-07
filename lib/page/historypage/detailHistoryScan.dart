@@ -180,21 +180,26 @@ class _DetailHistoryScanState extends State<DetailHistoryScan> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Text.rich(TextSpan(children: <InlineSpan>[
-                      TextSpan(
-                        text: widget.typeicon + ': ',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      TextSpan(
-                        text: widget.type,
-                        style: TextStyle(
-                          fontSize: 14,
-                        ),
-                      ),
-                    ])),
-                  ),
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            widget.typeicon + ': ',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            widget.type,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      )),
                 ],
               ),
             ),

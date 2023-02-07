@@ -41,12 +41,18 @@ class _WifiScanState extends State<WifiScan> {
     } else if (now.weekday == DateTime.sunday) {
       dayStr = 'Sunday';
     }
-    String time = now.hour.toString() + ':' + now.minute.toString();
+    String our =
+        now.hour < 10 ? '0' + now.hour.toString() : now.hour.toString();
+    String minu =
+        now.minute < 10 ? '0' + now.minute.toString() : now.minute.toString();
+
+    String time = our + ':' + minu;
     DateTimeModel date =
         DateTimeModel(dayStr, now.year, now.month, now.day, time);
 
     QrCustomModel qrCustomModel = new QrCustomModel(
-        data: 'WIFI:S:${widget.data[0]};T:${widget.data[1]};P:${widget.data[2]};H:true;;',
+        data:
+            'WIFI:S:${widget.data[0]};T:${widget.data[1]};P:${widget.data[2]};H:true;;',
         type: widget.data[0],
         image: 'assets/iconcustom/wifi.png',
         titleType: 'Wifi',

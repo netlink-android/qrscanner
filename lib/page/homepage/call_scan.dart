@@ -41,7 +41,12 @@ class _CallScanState extends State<CallScan> {
     } else if (now.weekday == DateTime.sunday) {
       dayStr = 'Sunday';
     }
-    String time = now.hour.toString() + ':' + now.minute.toString();
+    String our =
+        now.hour < 10 ? '0' + now.hour.toString() : now.hour.toString();
+    String minu =
+        now.minute < 10 ? '0' + now.minute.toString() : now.minute.toString();
+
+    String time = our + ':' + minu;
     DateTimeModel date =
         DateTimeModel(dayStr, now.year, now.month, now.day, time);
 
