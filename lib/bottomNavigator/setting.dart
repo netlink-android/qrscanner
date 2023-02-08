@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
@@ -13,20 +14,26 @@ class SettingPage extends StatefulWidget {
   State<SettingPage> createState() => _SettingPageState();
 }
 
-enum MenuItem { Beep, Vibrate, Silent }
+enum MenuItem { English, VietNam, None }
 
 class _SettingPageState extends State<SettingPage> {
   final switchData = GetStorage();
   bool isSwitched = false;
+  
+  bool isSound = false;
 
-  String valueLanguage = 'Vibrate';
+  String valueLanguage = 'English';
   @override
   void initState() {
     super.initState();
     if (switchData.read('isSwitched') != null) {
       setState(() {
         isSwitched = switchData.read('isSwitched');
-        print(isSwitched);
+      });
+    }
+    if (switchData.read('isSound') != null) {
+      setState(() {
+        isSound = switchData.read('isSound');
       });
     }
   }
@@ -107,7 +114,44 @@ class _SettingPageState extends State<SettingPage> {
                     Row(
                       children: [
                         Text(
-                          'Sound',
+                          'Beep',
+                          style: textType.copyWith(
+                              fontSize: 16, fontWeight: FontWeight.normal),
+                        ),
+                      ],
+                    ),
+                    Switch.adaptive(
+                        value: isSound,
+                        onChanged: (value) {
+                          setState(() {
+                            // isSwitched = themeProvider.isDarkMode;
+                            isSound = value;
+
+                            switchData.write('isSound', isSound);
+                          });
+                        }),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Container(
+              height: 50,
+              decoration: BoxDecoration(
+                color: grey.withOpacity(0.5),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          'Languages',
                           style: textType.copyWith(
                               fontSize: 16, fontWeight: FontWeight.normal),
                         ),
@@ -133,25 +177,25 @@ class _SettingPageState extends State<SettingPage> {
                             },
                             itemBuilder: (context) => const [
                                   PopupMenuItem(
-                                    value: MenuItem.Beep,
+                                    value: MenuItem.English,
                                     child: Text(
-                                      'Beep',
+                                      'English',
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                   PopupMenuItem(
-                                    value: MenuItem.Vibrate,
+                                    value: MenuItem.VietNam,
                                     child: Text(
-                                      'Vibrate',
+                                      'VietNam',
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                   PopupMenuItem(
-                                    value: MenuItem.Silent,
+                                    value: MenuItem.None,
                                     child: Text(
-                                      'Silent',
+                                      'None',
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold),
                                     ),
@@ -207,6 +251,8 @@ class _SettingPageState extends State<SettingPage> {
             child: GestureDetector(
               onTap: () {
                 print('Policy');
+
+                
               },
               child: Container(
                 height: 50,

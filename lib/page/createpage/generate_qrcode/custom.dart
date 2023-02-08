@@ -259,12 +259,12 @@ class _CustomPageQrState extends State<CustomPageQr> {
                                     setState(() {
                                       _texticon = 'Twiter';
                                       _asseticon =
-                                          'assets/iconcustom/iconnew/twiter.png';
+                                          'assets/iconcustom/iconnew/twitter.png';
                                       _iconOption = false;
                                     });
                                   },
                                   child: Image.asset(
-                                      'assets/iconcustom/iconnew/twiter.png'),
+                                      'assets/iconcustom/iconnew/twitter.png'),
                                 ),
                               ),
                               Container(

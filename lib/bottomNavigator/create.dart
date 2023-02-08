@@ -87,7 +87,7 @@ class _CreatePageState extends State<CreatePage> {
                 CreateCustomPage(
                     type: 'Instagram', icontype: 'iconnew/instagram.png'),
                 CreateCustomPage(
-                    type: 'Twitter', icontype: 'iconnew/twiter.png'),
+                    type: 'Twitter', icontype: 'iconnew/twitter.png'),
                     CreateCustomPage(
                     type: 'Skype', icontype: 'iconnew/skype.png'),
                 CreateCustomPage(

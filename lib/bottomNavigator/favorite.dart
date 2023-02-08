@@ -25,6 +25,40 @@ class _FavoritePageState extends State<FavoritePage> {
   List<QrCustomModel> qrCustomModel = [];
   final dataQr = GetStorage();
 
+  bool _isFilter = false;
+  List<String> _listFilter = [
+    'Email',
+    'Text',
+    'Call',
+    'Wifi',
+    'Location',
+    'SMS',
+    'Url',
+    'WhatsApp',
+    'Skype',
+    'Zoom',
+    'Facebook',
+    'Twitter',
+    'Youtube',
+  ];
+  List<bool> _islistFilter = List<bool>.filled(13, false);
+  Future<void> getFilter() async {
+    // _qrCustomModelFil.clear();
+    qrCustomModel.clear();
+    for (String dataus in data) {
+      Map<String, dynamic> jsondatais = jsonDecode(dataus);
+
+      QrCustomModel _dtFilter = QrCustomModel.fromJson(jsondatais);
+      for (int i = 0; i < _listFilter.length; i++) {
+        if (_islistFilter[i]) {
+          if (_dtFilter.typeicon == _listFilter[i]) {
+            qrCustomModel.add(_dtFilter);
+          }
+        }
+      }
+    }
+  }
+
   @override
   void initState() {
     setState(() {
@@ -48,8 +82,96 @@ class _FavoritePageState extends State<FavoritePage> {
     return valuedata
         ? SafeArea(
             child: Scaffold(
+              bottomNavigationBar: AnimatedContainer(
+                duration: const Duration(milliseconds: 500),
+                decoration: BoxDecoration(
+                  borderRadius:
+                      const BorderRadius.vertical(top: Radius.circular(20)),
+                  color: white,
+                  boxShadow: [
+                    BoxShadow(
+                        color: black.withOpacity(0.2),
+                        offset: Offset.zero,
+                        spreadRadius: 5,
+                        blurRadius: 10)
+                  ],
+                ),
+                height:
+                    _isFilter ? MediaQuery.of(context).size.height * 0.7 : 0,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 12, right: 12),
+                  child: ListView.builder(
+                      itemCount: _listFilter.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 8.0, bottom: 5),
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 8.0),
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(8)),
+                              color: blue.withOpacity(0.2),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                        height: 30,
+                                        width: 30,
+                                        child: index < 7
+                                            ? Image.asset(
+                                                'assets/iconcustom/${_listFilter[index].toLowerCase()}.png')
+                                            : Image.asset(
+                                                'assets/iconcustom/iconnew/${_listFilter[index].toLowerCase()}.png')),
+                                    Container(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      _listFilter[index],
+                                      style: textType.copyWith(fontSize: 18),
+                                    ),
+                                  ],
+                                ),
+                                Checkbox(
+                                    value: _islistFilter[index],
+                                    onChanged: (value) {
+                                      _islistFilter[index] =
+                                          !_islistFilter[index];
+
+                                      setState(() {
+                                        value = _islistFilter[index];
+                                        getFilter();
+                                        if (_islistFilter[0] == false &&
+                                            _islistFilter[1] == false &&
+                                            _islistFilter[2] == false &&
+                                            _islistFilter[3] == false &&
+                                            _islistFilter[0] == false &&
+                                            _islistFilter[4] == false &&
+                                            _islistFilter[5] == false &&
+                                            _islistFilter[6] == false &&
+                                            _islistFilter[7] == false &&
+                                            _islistFilter[8] == false &&
+                                            _islistFilter[9] == false &&
+                                            _islistFilter[10] == false &&
+                                            _islistFilter[11] == false &&
+                                            _islistFilter[12] == false) {
+                                          getStorageCreated();
+                                        }
+                                      });
+                                      // print(_islistFilter);
+                                    })
+                              ],
+                            ),
+                          ),
+                        );
+                      }),
+                ),
+              ),
               body: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.only(
+                    top: 16.0, left: 16, right: 16, bottom: 5),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,7 +184,9 @@ class _FavoritePageState extends State<FavoritePage> {
                         Container(
                           child: IconButton(
                             onPressed: () {
-                              setState(() {});
+                              setState(() {
+                                _isFilter = !_isFilter;
+                              });
                             },
                             icon: Icon(
                               Icons.filter_list_alt,

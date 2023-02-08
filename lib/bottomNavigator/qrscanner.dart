@@ -1,7 +1,10 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_zxing/flutter_zxing.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:qr_scanner/page/homepage/call_scan.dart';
 import 'package:qr_scanner/page/homepage/data_scan.dart';
@@ -33,11 +36,19 @@ class _QrScannerPageState extends State<QrScannerPage> {
   String typeScanner = '';
   List<String> dataScanner = [];
 
+  final switchData = GetStorage();
+  bool isSound = false;
+  final audioPlayer = AudioPlayer();
   @override
   void initState() {
     // TODO: implement initState
     zx.startCameraProcessing();
     codeState = false;
+    if (switchData.read('isSound') != null) {
+      setState(() {
+        isSound = switchData.read('isSound');
+      });
+    }
     super.initState();
   }
 
@@ -128,7 +139,7 @@ class _QrScannerPageState extends State<QrScannerPage> {
       dataScanner.add(data);
       dataScanner.add(typeScanner);
     } else if (data.indexOf('https://www.twitter.com') == 0) {
-      typeScanner = 'twiter';
+      typeScanner = 'twitter';
       dataScanner.add(data);
       dataScanner.add(typeScanner);
     } else if (data.indexOf('https://www.youtube.com') == 0) {
@@ -166,6 +177,12 @@ class _QrScannerPageState extends State<QrScannerPage> {
     }
 
     setState(() {
+      if (isSound) {
+        audioPlayer.play(AssetSource('sound/vibrate.mp3'),
+            position: Duration(microseconds: 100));
+      } else {
+        HapticFeedback.vibrate();
+      }
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (ctx) => _pageScane));
     });
