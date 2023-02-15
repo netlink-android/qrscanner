@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../ads/native.dart';
@@ -232,7 +233,9 @@ class _LocationScanState extends State<LocationScan> {
                                   borderRadius: BorderRadius.circular(12.0),
                                   // side: BorderSide(color: Colors.red)
                                 ))),
-                            onPressed: () {},
+                            onPressed: () {
+                              _share('https://maps.google.com/local?q=${widget.data[0]},${widget.data[1]}');
+                            },
                             child: Icon(
                               Icons.share,
                               color: black,
@@ -258,6 +261,8 @@ class _LocationScanState extends State<LocationScan> {
         ),
       ),
     );
-    ;
+  }
+  _share(String _data) async {
+    await Share.share(_data);
   }
 }

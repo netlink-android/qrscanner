@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../ads/native.dart';
@@ -42,7 +43,7 @@ class _EmailScanState extends State<EmailScan> {
     } else if (now.weekday == DateTime.sunday) {
       dayStr = 'Sunday';
     }
-  String our =
+    String our =
         now.hour < 10 ? '0' + now.hour.toString() : now.hour.toString();
     String minu =
         now.minute < 10 ? '0' + now.minute.toString() : now.minute.toString();
@@ -241,7 +242,11 @@ class _EmailScanState extends State<EmailScan> {
                                   borderRadius: BorderRadius.circular(12.0),
                                   // side: BorderSide(color: Colors.red)
                                 ))),
-                            onPressed: () {},
+                            onPressed: () {
+                              _share('To: ${widget.data[0]}' +
+                                  '\nSubject: ${widget.data[1]}' +
+                                  '\nContent: ${widget.data[2]}');
+                            },
                             child: Icon(
                               Icons.share,
                               color: black,
@@ -267,6 +272,9 @@ class _EmailScanState extends State<EmailScan> {
         ),
       ),
     );
-    ;
+  }
+
+  _share(String _data) async {
+    await Share.share(_data);
   }
 }

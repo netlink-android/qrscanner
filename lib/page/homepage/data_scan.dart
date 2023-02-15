@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../ads/native.dart';
@@ -223,7 +224,9 @@ class _DataScanState extends State<DataScan> {
                                   borderRadius: BorderRadius.circular(12.0),
                                   // side: BorderSide(color: Colors.red)
                                 ))),
-                            onPressed: () {},
+                            onPressed: () {
+                              _share(widget.data[0]);
+                            },
                             child: Icon(
                               Icons.share,
                               color: black,
@@ -249,6 +252,9 @@ class _DataScanState extends State<DataScan> {
         ),
       ),
     );
-    ;
+  }
+
+  _share(String _data) async {
+    await Share.share(_data);
   }
 }

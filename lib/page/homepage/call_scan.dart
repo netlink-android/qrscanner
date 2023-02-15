@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../ads/native.dart';
@@ -78,6 +79,7 @@ class _CallScanState extends State<CallScan> {
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -216,7 +218,9 @@ class _CallScanState extends State<CallScan> {
                                   borderRadius: BorderRadius.circular(12.0),
                                   // side: BorderSide(color: Colors.red)
                                 ))),
-                            onPressed: () {},
+                            onPressed: () {
+                              _share('Phone number: ${widget.data[0]}');
+                            },
                             child: Icon(
                               Icons.share,
                               color: black,
@@ -231,7 +235,6 @@ class _CallScanState extends State<CallScan> {
                   ),
                 ],
               ),
-              
             ),
             SizedBox(
               height: 15,
@@ -243,6 +246,9 @@ class _CallScanState extends State<CallScan> {
         ),
       ),
     );
-    ;
+  }
+
+  _share(String _data) async {
+    await Share.share(_data);
   }
 }
