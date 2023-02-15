@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_zxing/flutter_zxing.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:qr_scanner/ads/banner.dart';
 import 'package:qr_scanner/page/homepage/call_scan.dart';
 import 'package:qr_scanner/page/homepage/data_scan.dart';
 import 'package:qr_scanner/page/homepage/email_scan.dart';
@@ -17,8 +18,6 @@ import 'package:qr_scanner/page/homepage/wifi_scan.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../const.dart';
-import '../page/homepage/dataQr_page.dart';
-
 class QrScannerPage extends StatefulWidget {
   const QrScannerPage({super.key});
 
@@ -214,10 +213,6 @@ class _QrScannerPageState extends State<QrScannerPage> {
           if (resultFromPath!.rawBytes != null) {
             data = resultFromPath.text.toString();
             scanner();
-            // setState(() {
-
-            //   codeState = true;
-            // });
           } else {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text("Image not found qr"),
@@ -226,30 +221,7 @@ class _QrScannerPageState extends State<QrScannerPage> {
             setState(() {
               codeState = false;
             });
-
-            // if (isFile) {
-            //   final file = File(pickedFile.path);
-
-            //   setState(() {
-            //     fileImage = file;
-            //     print(fileImage);
-            //   });
-            // } else {
-            //   final bytes = await pickedFile.readAsBytes();
-
-            //   setState(() {
-            //     memoryImage = bytes;
-            //     print(memoryImage);
-            //   });
-            //   // Uint8List imbytes = Uint8List.fromList(memoryImage!);
-            //   // Code? resultFromBytes = await zx.readBarcode(imbytes,
-            //   //     height: 500, width: 500);
-            //   // print(resultFromBytes);
-            //   // print(resultFromBytes.text);
-            //   // print(resultFromBytes.rawBytes);
-            // }
           }
-          // Add your onPressed code here!
         },
         backgroundColor: black.withOpacity(0.5),
         child: Container(
@@ -259,138 +231,157 @@ class _QrScannerPageState extends State<QrScannerPage> {
               color: white.withOpacity(0.8),
             )),
       ),
-      body: Stack(
-        alignment: Alignment.center,
+      body: Column(
         children: [
-          Container(
-            child: ReaderWidget(
-              cropPercent: _currentSliderValue / 100,
-              onScan: (result) async {
-                print(result.text.toString());
-                data = await result.text.toString();
+          CustomBannerAd(idBanner: '/22486823495/sudoku_banner'),
+          Expanded(
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  child: ReaderWidget(
+                    cropPercent: _currentSliderValue / 100,
+                    onScan: (result) async {
+                      print(result.text.toString());
+                      data = await result.text.toString();
 
-                setState(() {
-                  // codeState = true;
-                  dataScanner.clear();
-                });
-                print(data);
-                scanner();
-              },
-            ),
-          ),
-          Positioned(
-            top: MediaQuery.of(context).size.height * 2.8 / 4,
-            child: Slider(
-              value: _currentSliderValue,
-              activeColor: Colors.white,
-              inactiveColor: Colors.grey,
-              max: 100,
-              min: 60,
-              // divisions: 5,
-              // label: _currentSliderValue.round().toString(),
-              onChanged: (double value) {
-                setState(() {
-                  _currentSliderValue = value;
-                });
-              },
-            ),
-          ),
-          Center(
-            child: SingleChildScrollView(
-              child: AnimatedContainer(
-                width: codeState ? 300 : 0,
-                duration: const Duration(milliseconds: 200),
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(16)),
-                  color: white,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 20, right: 20, bottom: 20, top: 10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(),
-                              IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      codeState = false;
-                                    });
-                                  },
-                                  icon: Icon(
-                                    Icons.close_sharp,
-                                    size: 40,
-                                    color: red,
-                                  )),
-                            ],
-                          ),
-                          Center(
-                            child: Text(
-                              codeState ? 'Data: $data' : '',
-                              style:
-                                  textType.copyWith(fontSize: 20, color: black),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(),
-                          ElevatedButton(
-                              onPressed: () async {
-                                Widget _pageScane = DataScan(data: dataScanner);
-                                if (typeScanner == 'email') {
-                                  _pageScane = EmailScan(data: dataScanner);
-                                } else if (typeScanner == 'call') {
-                                  _pageScane = CallScan(data: dataScanner);
-                                } else if (typeScanner == 'wifi') {
-                                  _pageScane = WifiScan(data: dataScanner);
-                                } else if (typeScanner == 'location') {
-                                  _pageScane = LocationScan(data: dataScanner);
-                                } else if (typeScanner == 'SMSTO') {
-                                  _pageScane = SmsScan(data: dataScanner);
-                                } else if (typeScanner == 'whatsapp') {
-                                  _pageScane = WhatsAppScan(data: dataScanner);
-                                } else if (typeScanner == 'whatsapp') {
-                                  _pageScane = WhatsAppScan(data: dataScanner);
-                                } else if (typeScanner == 'data') {
-                                  _pageScane = DataScan(data: dataScanner);
-                                } else {
-                                  _pageScane = TextUrlScan(data: dataScanner);
-                                }
-                                final resu = await Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                        builder: (ctx) => _pageScane));
-                                if (resu != null) {
-                                  setState(() {
-                                    codeState = false;
-                                  });
-                                }
-                              },
-                              child: Row(
-                                children: [
-                                  Text('View'),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
-                                    child: Icon(
-                                      Icons.arrow_circle_right_outlined,
-                                      color: blue,
-                                    ),
-                                  )
-                                ],
-                              )),
-                        ],
-                      )
-                    ],
+                      setState(() {
+                        // codeState = true;
+                        dataScanner.clear();
+                      });
+                      print(data);
+                      scanner();
+                    },
                   ),
                 ),
-              ),
+                Positioned(
+                  top: MediaQuery.of(context).size.height * 2.8 / 4,
+                  child: Slider(
+                    value: _currentSliderValue,
+                    activeColor: Colors.white,
+                    inactiveColor: Colors.grey,
+                    max: 100,
+                    min: 60,
+                    // divisions: 5,
+                    // label: _currentSliderValue.round().toString(),
+                    onChanged: (double value) {
+                      setState(() {
+                        _currentSliderValue = value;
+                      });
+                    },
+                  ),
+                ),
+                Center(
+                  child: SingleChildScrollView(
+                    child: AnimatedContainer(
+                      width: codeState ? 300 : 0,
+                      duration: const Duration(milliseconds: 200),
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
+                        color: white,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 20, right: 20, bottom: 20, top: 10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(),
+                                    IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            codeState = false;
+                                          });
+                                        },
+                                        icon: Icon(
+                                          Icons.close_sharp,
+                                          size: 40,
+                                          color: red,
+                                        )),
+                                  ],
+                                ),
+                                Center(
+                                  child: Text(
+                                    codeState ? 'Data: $data' : '',
+                                    style: textType.copyWith(
+                                        fontSize: 20, color: black),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(),
+                                ElevatedButton(
+                                    onPressed: () async {
+                                      Widget _pageScane =
+                                          DataScan(data: dataScanner);
+                                      if (typeScanner == 'email') {
+                                        _pageScane =
+                                            EmailScan(data: dataScanner);
+                                      } else if (typeScanner == 'call') {
+                                        _pageScane =
+                                            CallScan(data: dataScanner);
+                                      } else if (typeScanner == 'wifi') {
+                                        _pageScane =
+                                            WifiScan(data: dataScanner);
+                                      } else if (typeScanner == 'location') {
+                                        _pageScane =
+                                            LocationScan(data: dataScanner);
+                                      } else if (typeScanner == 'SMSTO') {
+                                        _pageScane = SmsScan(data: dataScanner);
+                                      } else if (typeScanner == 'whatsapp') {
+                                        _pageScane =
+                                            WhatsAppScan(data: dataScanner);
+                                      } else if (typeScanner == 'whatsapp') {
+                                        _pageScane =
+                                            WhatsAppScan(data: dataScanner);
+                                      } else if (typeScanner == 'data') {
+                                        _pageScane =
+                                            DataScan(data: dataScanner);
+                                      } else {
+                                        _pageScane =
+                                            TextUrlScan(data: dataScanner);
+                                      }
+                                      final resu = await Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                              builder: (ctx) => _pageScane));
+                                      if (resu != null) {
+                                        setState(() {
+                                          codeState = false;
+                                        });
+                                      }
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Text('View'),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 8.0),
+                                          child: Icon(
+                                            Icons.arrow_circle_right_outlined,
+                                            color: blue,
+                                          ),
+                                        )
+                                      ],
+                                    )),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],

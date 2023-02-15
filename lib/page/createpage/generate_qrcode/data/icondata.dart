@@ -12,6 +12,7 @@ import 'package:qr_scanner/model/datetime.dart';
 import 'package:qr_scanner/storage/qrstorage.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../../../ads/native.dart';
 import '../../../../model/qrcustom_model.dart';
 
 class IconQrPage extends StatefulWidget {
@@ -37,6 +38,7 @@ class IconQrPage extends StatefulWidget {
 class _IconQrPageState extends State<IconQrPage> {
   bool favorite = false;
   StorageProvider save = StorageProvider();
+  FileImage? fileImage;
   Future<void> addHistoryCustom() async {
     //store the user entered data in user object
     //store the user entered data in user object
@@ -114,37 +116,31 @@ class _IconQrPageState extends State<IconQrPage> {
                       size: 35,
                     ),
                   ),
-                  Row(
-                    children: [
-                      Container(
-                        width: 15,
-                      ),
-                      Text(
-                        widget.titleType,
-                        style: textType,
-                      ),
-                    ],
+                  Text(
+                    widget.titleType,
+                    style: textType,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            favorite = !favorite;
-                            toastFavorite();
-                          });
-                        },
-                        icon: favorite
-                            ? Icon(
-                                Icons.star,
-                                size: 35,
-                                color: red,
-                              )
-                            : Icon(
-                                Icons.star_border_outlined,
-                                size: 35,
-                              )),
-                  )
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  //   child: IconButton(
+                  //       onPressed: () {
+                  //         setState(() {
+                  //           favorite = !favorite;
+                  //           toastFavorite();
+                  //         });
+                  //       },
+                  //       icon: favorite
+                  //           ? Icon(
+                  //               Icons.star,
+                  //               size: 35,
+                  //               color: red,
+                  //             )
+                  //           : Icon(
+                  //               Icons.star_border_outlined,
+                  //               size: 35,
+                  //             )),
+                  // )
+                  Container()
                 ],
               ),
             ),
@@ -161,10 +157,12 @@ class _IconQrPageState extends State<IconQrPage> {
                       data: widget.data,
                       version: QrVersions.auto,
                       size: 250,
-                      embeddedImage:
-                          widget.image != 'assets/iconcustom/iconnew/noicon.png'
+                      embeddedImage: widget.image !=
+                              'assets/iconcustom/iconnew/noicon.png'
+                          ? (widget.typeicon != 'FileAssets'
                               ? AssetImage(widget.image)
-                              : null,
+                              : FileImage(File(widget.image)) as ImageProvider)
+                          : null,
                       embeddedImageStyle: QrEmbeddedImageStyle(
                         size: Size(52, 52),
                       ),
@@ -284,6 +282,12 @@ class _IconQrPageState extends State<IconQrPage> {
                 ),
               ],
             ),
+            SizedBox(
+              height: 15,
+            ),
+            NativeAdManager(
+              idNative: '/22486823495/sudoku_native',
+            ),
           ],
         ),
       ),
@@ -314,7 +318,12 @@ class _IconQrPageState extends State<IconQrPage> {
     final qrcode = qrValidationResult.qrCode;
     final painter = QrPainter.withQr(
       qr: qrcode!,
-      embeddedImage: null,
+      embeddedImage:
+          // widget.image != 'assets/iconcustom/iconnew/noicon.png'
+          //     ? (widget.typeicon != 'FileAssets'
+          //         ? Image(image: AssetImage(widget.i),)
+          // : Image())
+          null,
       // embeddedImageStyle: QrEmbeddedImageStyle(
       //   size: Size.square(60),
       // ),

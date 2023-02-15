@@ -10,6 +10,7 @@ import 'package:qr_scanner/page/createpage/generate_qrcode/v-card.dart';
 import 'package:qr_scanner/page/createpage/generate_qrcode/wifi.dart';
 import 'package:qr_scanner/page/createpage/generate_qrcode/zoom.dart';
 
+import '../../ads/interstitial.dart';
 import '../../const.dart';
 import 'generate_qrcode/calendar.dart';
 import 'generate_qrcode/location.dart';
@@ -25,6 +26,16 @@ class CreateCustomPage extends StatefulWidget {
 }
 
 class _CreateCustomPageState extends State<CreateCustomPage> {
+  InterstitialAdManager? interstitialAdManager;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    interstitialAdManager =
+        InterstitialAdManager('/22486823495/sudoku_iterstitial')
+          ..loadInterstitial();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -42,11 +53,14 @@ class _CreateCustomPageState extends State<CreateCustomPage> {
                   ))),
               onPressed: () {
                 print(widget.type);
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (ctx) => _pageQr(),
-                  ),
-                );
+                setState(() {
+                  interstitialAdManager!.showInterstitial(context, _pageQr());
+                });
+                // Navigator.of(context).push(
+                //   MaterialPageRoute(
+                //     builder: (ctx) => _pageQr(),
+                //   ),
+                // );
               },
               child: Image.asset('assets/iconcustom/' + widget.icontype)),
         ),
@@ -89,7 +103,7 @@ class _CreateCustomPageState extends State<CreateCustomPage> {
       // 'Calendar',
       'Zoom',
       'Social',
-      
+
       'Custom',
       // 'Custom',
     ];

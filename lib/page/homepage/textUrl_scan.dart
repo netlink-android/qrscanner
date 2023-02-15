@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../ads/native.dart';
 import '../../const.dart';
 import '../../model/datetime.dart';
 import '../../model/qrcustom_model.dart';
@@ -234,7 +236,11 @@ class _TextUrlScanState extends State<TextUrlScan> {
                                   borderRadius: BorderRadius.circular(12.0),
                                   // side: BorderSide(color: Colors.red)
                                 ))),
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                _share(widget.data[0]);
+                              });
+                            },
                             child: Icon(
                               Icons.share,
                               color: black,
@@ -249,11 +255,20 @@ class _TextUrlScanState extends State<TextUrlScan> {
                   ),
                 ],
               ),
-            )
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            NativeAdManager(
+              idNative: '/22486823495/sudoku_native',
+            ),
           ],
         ),
       ),
     );
-    ;
+  }
+
+  _share(String _data) async {
+    await Share.share(_data);
   }
 }

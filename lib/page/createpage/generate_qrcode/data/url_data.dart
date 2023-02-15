@@ -10,6 +10,7 @@ import 'package:gallery_saver/gallery_saver.dart';
 import 'package:qr_scanner/const.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../../../ads/native.dart';
 import '../../../../model/datetime.dart';
 import '../../../../model/qrcustom_model.dart';
 import '../../../../storage/qrstorage.dart';
@@ -108,37 +109,31 @@ class _UrlQrPageState extends State<UrlQrPage> {
                       size: 35,
                     ),
                   ),
-                  Row(
-                    children: [
-                      Container(
-                        width: 15,
-                      ),
-                      Text(
-                        widget.titleType,
-                        style: textType,
-                      ),
-                    ],
+                  Text(
+                    widget.titleType,
+                    style: textType,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            favorite = !favorite;
-                            toastFavorite();
-                          });
-                        },
-                        icon: favorite
-                            ? Icon(
-                                Icons.star,
-                                size: 35,
-                                color: red,
-                              )
-                            : Icon(
-                                Icons.star_border_outlined,
-                                size: 35,
-                              )),
-                  )
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  //   child: IconButton(
+                  //       onPressed: () {
+                  //         setState(() {
+                  //           favorite = !favorite;
+                  //           toastFavorite();
+                  //         });
+                  //       },
+                  //       icon: favorite
+                  //           ? Icon(
+                  //               Icons.star,
+                  //               size: 35,
+                  //               color: red,
+                  //             )
+                  //           : Icon(
+                  //               Icons.star_border_outlined,
+                  //               size: 35,
+                  //             )),
+                  // )
+                  Container()
                 ],
               ),
             ),
@@ -260,6 +255,12 @@ class _UrlQrPageState extends State<UrlQrPage> {
                       )),
                 ),
               ],
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            NativeAdManager(
+              idNative: '/22486823495/sudoku_native',
             ),
           ],
         ),

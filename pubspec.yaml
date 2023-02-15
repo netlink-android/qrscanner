@@ -53,6 +53,7 @@ dependencies:
   flutter_colorpicker: ^1.0.3
   flutter_slidable: ^2.0.0
   audioplayers: ^3.0.1
+  google_mobile_ads: ^1.0.1
   
  
 

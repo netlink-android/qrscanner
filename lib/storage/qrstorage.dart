@@ -51,13 +51,37 @@ class StorageProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  //favorite
+  addDataFavorite(String datatest) async {
+    if (_storage.read('dataFavorite') != null) {
+      _data = _storage.read('dataFavorite');
+      _data.insert(0, datatest);
+      _storage.write('dataFavorite', _data);
+    } else {
+      _data.insert(0, datatest);
+      _storage.write('dataFavorite', _data);
+    }
+    notifyListeners();
+  }
+
+  remoceFavorite(int id) async {
+    _data = _storage.read('dataFavorite');
+    await _data.removeAt(id);
+    if (_data.length >= 1) {
+      _storage.write('dataFavorite', _data);
+    } else {
+      _storage.remove('dataFavorite');
+    }
+    notifyListeners();
+  }
+
   addDFavorite(int id, String datatest) async {
-    _data = _storage.read('data');
+    _data = _storage.read('dataScanner');
     if (_data.length >= 1) {
       _data[id] = datatest;
-      _storage.write('data', _data);
+      _storage.write('dataScanner', _data);
     } else {
-      _storage.remove('data');
+      _storage.remove('dataScanner');
     }
     notifyListeners();
   }

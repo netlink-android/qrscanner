@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
+import 'package:qr_scanner/ads/interstitial.dart';
 import 'package:qr_scanner/bottomNavigator/qrscanner.dart';
 import 'package:qr_scanner/const.dart';
 import 'package:qr_scanner/bottomNavigator/create.dart';
@@ -10,7 +12,12 @@ import 'package:qr_scanner/bottomNavigator/home_page.dart';
 import 'package:qr_scanner/bottomNavigator/setting.dart';
 import 'package:qr_scanner/them_provider.dart';
 
+import 'ads/openapp.dart';
+
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
+
   await GetStorage.init();
   runApp(const MyApp());
 }
@@ -33,10 +40,75 @@ class _MyAppState extends State<MyApp> {
             themeMode: themeProvider.themeMode,
             theme: MyThemes.lightTheme,
             darkTheme: MyThemes.darkTheme,
-            home: MainPage(),
+            home: Splash(),
           );
         },
       );
+}
+
+class Splash extends StatefulWidget {
+  const Splash({super.key});
+
+  @override
+  State<Splash> createState() => _SplashState();
+}
+
+class _SplashState extends State<Splash> {
+  InterstitialAdManager? interstitialAdManager;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    interstitialAdManager =
+        InterstitialAdManager('/22486823495/sudoku_iterstitial')
+          ..loadInterstitial();
+    setState(() {
+      _splash();
+    });
+  }
+
+  _splash() async {
+    await Future.delayed(Duration(milliseconds: 10000), () {
+      setState(() {
+        interstitialAdManager!.showInterstitial(context, MainPage());
+      });
+    });
+    // setState(() {
+    //   Navigator.push(context, MaterialPageRoute(builder: (ct) {
+    //     // do something
+    //     return MainPage();
+    //   }));
+    // });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+                height: 100,
+                width: 100,
+                child: Image.asset('assets/iconcustom/logoQr.png')),
+          ),
+          Text(
+            'Qr Scanner',
+            style: textType,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CircularProgressIndicator(
+              color: blue,
+            ),
+          )
+        ],
+      )),
+    );
+  }
 }
 
 class MainPage extends StatefulWidget {
@@ -47,9 +119,19 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  AppOpenAdManager? appOpenAdManager;
   int currentIndex = 0;
   Widget currenScreen = QrScannerPage();
   final PageStorageBucket _pageStorageBucket = PageStorageBucket();
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   appOpenAdManager = AppOpenAdManager()..loadAd();
+  //   WidgetsBinding.instance
+  //       .addObserver(AppLifecycleReactor(appOpenAdManager: appOpenAdManager!));
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,17 +141,21 @@ class _MainPageState extends State<MainPage> {
         child: SafeArea(child: currenScreen),
       ),
       floatingActionButton: FloatingActionButton(
-        heroTag: "btnScan",
-        enableFeedback: false,
-        backgroundColor: blue,
-        onPressed: () {
-          setState(() {
-            currentIndex = 0;
-            currenScreen = QrScannerPage();
-          });
-        },
-        child: Icon(Icons.qr_code),
-      ),
+          heroTag: "btnScan",
+          enableFeedback: false,
+          backgroundColor: blue,
+          onPressed: () {
+            setState(() {
+              currentIndex = 0;
+              currenScreen = QrScannerPage();
+            });
+          },
+          child: CircleAvatar(
+            child: Container(
+                height: 100,
+                width: 100,
+                child: Image.asset('assets/iconcustom/logoQr.png')),
+          )),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
         shape: CircularNotchedRectangle(),

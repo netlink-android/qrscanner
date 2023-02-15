@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../ads/native.dart';
 import '../../const.dart';
 import '../../model/datetime.dart';
 import '../../model/qrcustom_model.dart';
@@ -246,7 +247,13 @@ class _LocationScanState extends State<LocationScan> {
                   ),
                 ],
               ),
-            )
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            NativeAdManager(
+              idNative: '/22486823495/sudoku_native',
+            ),
           ],
         ),
       ),

@@ -4,6 +4,8 @@ import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter_zxing/flutter_zxing.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:qr_scanner/model/qrcustom_model.dart';
@@ -30,6 +32,9 @@ class _CustomPageQrState extends State<CustomPageQr> {
   Color _shapeColor = black;
   Color _eyeColor = black;
   int _shapevalue = 1, _eyevalue = 1;
+
+  File? fileImage;
+  bool isFile = false;
 
   @override
   void initState() {
@@ -109,7 +114,9 @@ class _CustomPageQrState extends State<CustomPageQr> {
                           height: 30,
                           width: 40,
                           decoration: BoxDecoration(shape: BoxShape.circle),
-                          child: Image.asset(_asseticon),
+                          child: !isFile
+                              ? Image.asset(_asseticon)
+                              : Image.file(fileImage!),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 10.0),
@@ -136,7 +143,7 @@ class _CustomPageQrState extends State<CustomPageQr> {
                 ),
                 AnimatedContainer(
                   duration: const Duration(milliseconds: 500),
-                  height: _iconOption ? 250 : 0,
+                  height: _iconOption ? 290 : 0,
                   child: SingleChildScrollView(
                     child: Container(
                       decoration: BoxDecoration(
@@ -172,6 +179,7 @@ class _CustomPageQrState extends State<CustomPageQr> {
                                       _asseticon =
                                           'assets/iconcustom/iconnew/facebook.png';
                                       _iconOption = false;
+                                      isFile = false;
                                     });
                                   },
                                   child: Image.asset(
@@ -199,6 +207,7 @@ class _CustomPageQrState extends State<CustomPageQr> {
                                       _asseticon =
                                           'assets/iconcustom/iconnew/instagram.png';
                                       _iconOption = false;
+                                      isFile = false;
                                     });
                                   },
                                   child: Image.asset(
@@ -226,6 +235,7 @@ class _CustomPageQrState extends State<CustomPageQr> {
                                       _asseticon =
                                           'assets/iconcustom/iconnew/youtube.png';
                                       _iconOption = false;
+                                      isFile = false;
                                     });
                                   },
                                   child: Image.asset(
@@ -261,6 +271,7 @@ class _CustomPageQrState extends State<CustomPageQr> {
                                       _asseticon =
                                           'assets/iconcustom/iconnew/twitter.png';
                                       _iconOption = false;
+                                      isFile = false;
                                     });
                                   },
                                   child: Image.asset(
@@ -288,6 +299,7 @@ class _CustomPageQrState extends State<CustomPageQr> {
                                       _asseticon =
                                           'assets/iconcustom/iconnew/linkin.png';
                                       _iconOption = false;
+                                      isFile = false;
                                     });
                                   },
                                   child: Image.asset(
@@ -315,6 +327,7 @@ class _CustomPageQrState extends State<CustomPageQr> {
                                       _asseticon =
                                           'assets/iconcustom/iconnew/pinterest.png';
                                       _iconOption = false;
+                                      isFile = false;
                                     });
                                   },
                                   child: Image.asset(
@@ -350,6 +363,7 @@ class _CustomPageQrState extends State<CustomPageQr> {
                                       _asseticon =
                                           'assets/iconcustom/iconnew/appstore.png';
                                       _iconOption = false;
+                                      isFile = false;
                                     });
                                   },
                                   child: Image.asset(
@@ -377,6 +391,7 @@ class _CustomPageQrState extends State<CustomPageQr> {
                                       _asseticon =
                                           'assets/iconcustom/iconnew/chplay.png';
                                       _iconOption = false;
+                                      isFile = false;
                                     });
                                   },
                                   child: Image.asset(
@@ -404,6 +419,7 @@ class _CustomPageQrState extends State<CustomPageQr> {
                                       _asseticon =
                                           'assets/iconcustom/iconnew/google.png';
                                       _iconOption = false;
+                                      isFile = false;
                                     });
                                   },
                                   child: Image.asset(
@@ -414,6 +430,111 @@ class _CustomPageQrState extends State<CustomPageQr> {
                           ),
                           Container(
                             height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Container(
+                                height: 60,
+                                width: 60,
+                                child: ElevatedButton(
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color?>(
+                                              white),
+                                      shape: MaterialStateProperty.all<
+                                              RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
+                                        // side: BorderSide(color: Colors.red)
+                                      ))),
+                                  onPressed: () {
+                                    setState(() {
+                                      _texticon = 'Whatsapp';
+                                      _asseticon =
+                                          'assets/iconcustom/iconnew/whatsapp.png';
+                                      _iconOption = false;
+                                      isFile = false;
+                                    });
+                                  },
+                                  child: Image.asset(
+                                      'assets/iconcustom/iconnew/whatsapp.png'),
+                                ),
+                              ),
+                              Container(
+                                height: 60,
+                                width: 60,
+                                child: ElevatedButton(
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color?>(
+                                              white),
+                                      shape: MaterialStateProperty.all<
+                                              RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
+                                        // side: BorderSide(color: Colors.red)
+                                      ))),
+                                  onPressed: () {
+                                    setState(() {
+                                      _texticon = 'Zoom';
+                                      _asseticon =
+                                          'assets/iconcustom/iconnew/zoom.png';
+                                      _iconOption = false;
+                                      isFile = false;
+                                    });
+                                  },
+                                  child: Image.asset(
+                                      'assets/iconcustom/iconnew/zoom.png'),
+                                ),
+                              ),
+                              Container(
+                                height: 60,
+                                width: 60,
+                                child: ElevatedButton(
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color?>(
+                                              white),
+                                      shape: MaterialStateProperty.all<
+                                              RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
+                                        // side: BorderSide(color: Colors.red)
+                                      ))),
+                                  onPressed: () async {
+                                    final picker = ImagePicker();
+                                    final pickedFile = await picker.getImage(
+                                        source: ImageSource.gallery);
+
+                                    if (pickedFile == null) return;
+
+                                    final file = File(pickedFile.path);
+
+                                    setState(() {
+                                      fileImage = file;
+                                      if (fileImage!.path != null) {
+                                        isFile = true;
+                                      }
+                                    });
+
+                                    setState(() {
+                                      _texticon = 'FileAssets';
+                                      _asseticon = fileImage!.path;
+                                      _iconOption = false;
+                                    });
+                                  },
+                                  child: Image.asset(
+                                      'assets/iconcustom/upload.png'),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Container(
+                            height: 5,
                           )
                         ],
                       ),

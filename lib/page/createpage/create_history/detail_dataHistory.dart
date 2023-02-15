@@ -14,6 +14,7 @@ import 'package:qr_scanner/storage/qrstorage.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../../model/qrcustom_model.dart';
+import '../../../ads/native.dart';
 
 class DetailDataHistory extends StatefulWidget {
   int id = 0;
@@ -73,7 +74,8 @@ class _DetailDataHistoryState extends State<DetailDataHistory> {
     String user11 = jsonEncode(qrCustomModel);
 
     //save the data into sharedPreferences using key-value pairs
-    strSave.addDFavorite(id, user11);
+    strSave.addDataFavorite(user11);
+    strSave.remoceItem(id);
   }
 
   @override
@@ -154,7 +156,9 @@ class _DetailDataHistoryState extends State<DetailDataHistory> {
                       version: QrVersions.auto,
                       size: 250,
                       embeddedImage: widget.titleType == 'Custom'
-                          ? AssetImage(widget.image)
+                          ? (widget.typeicon != 'FileAssets'
+                              ? AssetImage(widget.image)
+                              : FileImage(File(widget.image)) as ImageProvider)
                           : null,
                       embeddedImageStyle: QrEmbeddedImageStyle(
                         size: Size(52, 52),
@@ -282,6 +286,12 @@ class _DetailDataHistoryState extends State<DetailDataHistory> {
                       )),
                 ),
               ],
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            NativeAdManager(
+              idNative: '/22486823495/sudoku_native',
             ),
           ],
         ),

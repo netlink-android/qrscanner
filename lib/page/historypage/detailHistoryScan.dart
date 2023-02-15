@@ -14,6 +14,7 @@ import 'package:qr_scanner/storage/qrstorage.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../../model/qrcustom_model.dart';
+import '../../ads/native.dart';
 
 class DetailHistoryScan extends StatefulWidget {
   int id = 0;
@@ -281,6 +282,12 @@ class _DetailHistoryScanState extends State<DetailHistoryScan> {
                 ),
               ],
             ),
+              SizedBox(
+              height: 15,
+            ),
+            NativeAdManager(
+              idNative: '/22486823495/sudoku_native',
+            ),
           ],
         ),
       ),
@@ -289,40 +296,40 @@ class _DetailHistoryScanState extends State<DetailHistoryScan> {
 
   void toastFavorite() {
     if (favoritee) {
-      // QrCustomModel qrCustomModel = new QrCustomModel(
-      //     data: widget.data,
-      //     type: widget.type,
-      //     image: widget.image,
-      //     titleType: widget.titleType,
-      //     typeicon: widget.typeicon,
-      //     bodyColor: widget.shapeColor,
-      //     eyeColor: widget.eyeColor,
-      //     bodyvalue: widget.eyevalue,
-      //     eyevalue: widget.eyevalue,
-      //     date: widget.dateTimeModel,
-      //     favorite: true);
-      // addFavor(widget.id, qrCustomModel);
+      QrCustomModel qrCustomModel = new QrCustomModel(
+          data: widget.data,
+          type: widget.type,
+          image: widget.image,
+          titleType: widget.titleType,
+          typeicon: widget.typeicon,
+          bodyColor: widget.shapeColor,
+          eyeColor: widget.eyeColor,
+          bodyvalue: widget.eyevalue,
+          eyevalue: widget.eyevalue,
+          date: widget.dateTimeModel,
+          favorite: true);
+      addFavor(widget.id, qrCustomModel);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("Added to Favorites"),
         duration: Duration(milliseconds: 700),
       ));
     } else {
-      // QrCustomModel qrCustomModel = new QrCustomModel(
-      //     data: widget.data,
-      //     type: widget.type,
-      //     image: widget.image,
-      //     titleType: widget.titleType,
-      //     typeicon: widget.typeicon,
-      //     bodyColor: widget.shapeColor,
-      //     eyeColor: widget.eyeColor,
-      //     bodyvalue: widget.eyevalue,
-      //     eyevalue: widget.eyevalue,
-      //     date: widget.dateTimeModel,
-      //     favorite: false);
-      // addFavor(widget.id, qrCustomModel);
+      QrCustomModel qrCustomModel = new QrCustomModel(
+          data: widget.data,
+          type: widget.type,
+          image: widget.image,
+          titleType: widget.titleType,
+          typeicon: widget.typeicon,
+          bodyColor: widget.shapeColor,
+          eyeColor: widget.eyeColor,
+          bodyvalue: widget.eyevalue,
+          eyevalue: widget.eyevalue,
+          date: widget.dateTimeModel,
+          favorite: false);
+      addFavor(widget.id, qrCustomModel);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("Deleted to Favorites"),
-        duration: Duration(milliseconds: 400),
+        duration: Duration(milliseconds: 700),
       ));
     }
   }
