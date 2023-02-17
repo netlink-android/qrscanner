@@ -255,7 +255,7 @@ class _LocationScanState extends State<LocationScan> {
               height: 15,
             ),
             NativeAdManager(
-              idNative: '/22486823495/sudoku_native',
+              idNative: '/22486823495/sudoku_native',small: true
             ),
           ],
         ),

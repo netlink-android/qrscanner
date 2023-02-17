@@ -70,4 +70,10 @@ flutter {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     // implementation 'vn.netlink:android-sdk:1.0.0'
+//    implementation 'com.google.ads.mediation:fyber:8.2.0.0'
+//    implementation 'com.google.ads.mediation:applovin:11.7.1.0'
+//    implementation 'com.google.ads.mediation:unity:4.5.0.0'
+//    implementation 'com.google.ads.mediation:vungle:6.12.1.0'
+//    implementation 'com.unity3d.ads:unity-ads:4.5.0'
+//    implementation 'com.google.ads.mediation:ironsource:7.2.7.0'
 }

@@ -5,7 +5,7 @@
      <uses-feature android:name="android.hardware.camera"/>
           <uses-permission android:name="android.permission.VIBRATE"/>
    <application
-        android:label="qr_scanner"
+        android:label="QR Scanner"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

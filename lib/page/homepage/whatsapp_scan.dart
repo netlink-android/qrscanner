@@ -253,7 +253,7 @@ class _WhatsAppScanState extends State<WhatsAppScan> {
               height: 15,
             ),
             NativeAdManager(
-              idNative: '/22486823495/sudoku_native',
+              idNative: '/22486823495/sudoku_native',small: true
             ),
           ],
         ),

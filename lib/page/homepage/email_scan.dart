@@ -266,7 +266,7 @@ class _EmailScanState extends State<EmailScan> {
               height: 15,
             ),
             NativeAdManager(
-              idNative: '/22486823495/sudoku_native',
+              idNative: '/22486823495/sudoku_native',small: true
             ),
           ],
         ),

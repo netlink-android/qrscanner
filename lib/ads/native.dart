@@ -5,7 +5,9 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class NativeAdManager extends StatefulWidget {
   String idNative = '/22486823495/sudoku_native';
-  NativeAdManager({Key? key, required this.idNative}) : super(key: key);
+  bool small = true;
+  NativeAdManager({Key? key, required this.idNative, required this.small})
+      : super(key: key);
 
   @override
   State<NativeAdManager> createState() => _NativeAdManagerState();
@@ -34,7 +36,7 @@ class _NativeAdManagerState extends State<NativeAdManager> {
 
   void loadNative() {
     nativeAd = NativeAd(
-      factoryId: 'listTile',
+      factoryId: widget.small ? 'listTile' : 'listTileMedium',
       adUnitId: widget.idNative,
       listener: NativeAdListener(
         // Called when an ad is successfully received.
@@ -77,9 +79,8 @@ class _NativeAdManagerState extends State<NativeAdManager> {
   Widget build(BuildContext context) {
     return isNativeAdLoaded
         ? SizedBox(
-          
             width: double.infinity,
-            height: 75,
+            height: widget.small ? 170 : 250,
             child: Container(
               child: AdWidget(
                 ad: nativeAd!,

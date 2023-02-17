@@ -31,6 +31,7 @@ class _HistoryPageState extends State<HistoryPage> {
   //filter
   bool _isFilter = false;
   List<String> _listFilter = [
+    'Favorite',
     'Email',
     'Text',
     'Call',
@@ -45,7 +46,7 @@ class _HistoryPageState extends State<HistoryPage> {
     'Twitter',
     'Youtube',
   ];
-  List<bool> _islistFilter = List<bool>.filled(13, false);
+  List<bool> _islistFilter = List<bool>.filled(14, false);
   Future<void> getFilter() async {
     // _qrCustomModelFil.clear();
     qrCustomModel.clear();
@@ -53,10 +54,21 @@ class _HistoryPageState extends State<HistoryPage> {
       Map<String, dynamic> jsondatais = jsonDecode(dataus);
 
       QrCustomModel _dtFilter = QrCustomModel.fromJson(jsondatais);
-      for (int i = 0; i < _listFilter.length; i++) {
-        if (_islistFilter[i]) {
-          if (_dtFilter.typeicon == _listFilter[i]) {
-            qrCustomModel.add(_dtFilter);
+      if (_islistFilter[0]) {
+        if (_dtFilter.favorite) {
+          qrCustomModel.add(_dtFilter);
+          // for (int i = 0; i < qrCustomModel.length; i++) {
+          //   if (_dtFilter.typeicon == _listFilter[i]) {
+          //     qrCustomModel.add(_dtFilter);
+          //   }
+          // }                          
+        }
+      } else {
+        for (int i = 1; i < _listFilter.length; i++) {
+          if (_islistFilter[i]) {
+            if (_dtFilter.typeicon == _listFilter[i]) {
+              qrCustomModel.add(_dtFilter);
+            }
           }
         }
       }
@@ -92,19 +104,9 @@ class _HistoryPageState extends State<HistoryPage> {
                 decoration: BoxDecoration(
                   borderRadius:
                       const BorderRadius.vertical(top: Radius.circular(20)),
-                  // color: white,
-                  // boxShadow: [
-                  //   _isFilter
-                  //       ? BoxShadow(
-                  //           color: black.withOpacity(0.2),
-                  //           offset: Offset.zero,
-                  //           spreadRadius: 5,
-                  //           blurRadius: 10)
-                  //       : BoxShadow()
-                  // ],
                 ),
                 height:
-                    _isFilter ? MediaQuery.of(context).size.height * 0.7 : 0,
+                    _isFilter ? MediaQuery.of(context).size.height * 0.55 : 0,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 12, right: 12),
                   child: ListView.builder(
@@ -127,11 +129,16 @@ class _HistoryPageState extends State<HistoryPage> {
                                     Container(
                                         height: 30,
                                         width: 30,
-                                        child: index < 7
-                                            ? Image.asset(
-                                                'assets/iconcustom/${_listFilter[index].toLowerCase()}.png')
-                                            : Image.asset(
-                                                'assets/iconcustom/iconnew/${_listFilter[index].toLowerCase()}.png')),
+                                        child: index == 0
+                                            ? Icon(
+                                                Icons.favorite,
+                                                color: red,
+                                              )
+                                            : (index < 8
+                                                ? Image.asset(
+                                                    'assets/iconcustom/${_listFilter[index].toLowerCase()}.png')
+                                                : Image.asset(
+                                                    'assets/iconcustom/iconnew/${_listFilter[index].toLowerCase()}.png'))),
                                     Container(
                                       width: 10,
                                     ),
@@ -164,8 +171,9 @@ class _HistoryPageState extends State<HistoryPage> {
                                             _islistFilter[9] == false &&
                                             _islistFilter[10] == false &&
                                             _islistFilter[11] == false &&
-                                            _islistFilter[12] == false) {
-                                              _checkDelete = true;
+                                            _islistFilter[12] == false &&
+                                            _islistFilter[13] == false) {
+                                          _checkDelete = true;
                                           getStorageHistory();
                                         }
                                       });

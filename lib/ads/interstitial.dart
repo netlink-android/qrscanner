@@ -33,6 +33,10 @@ class InterstitialAdManager {
   void showInterstitial(BuildContext context, Widget widget) {
     if (interstitialAd == null) {
       loadInterstitial();
+      Navigator.push(context, MaterialPageRoute(builder: (ct) {
+          // do something
+          return widget;
+        }));
       return;
     }
     interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(

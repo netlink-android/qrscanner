@@ -291,7 +291,7 @@ class _DetailDataHistoryState extends State<DetailDataHistory> {
               height: 15,
             ),
             NativeAdManager(
-              idNative: '/22486823495/sudoku_native',
+              idNative: '/22486823495/sudoku_native', small: true
             ),
           ],
         ),

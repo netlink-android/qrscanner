@@ -5,6 +5,10 @@ import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_scanner/ads/banner.dart';
 import 'package:qr_scanner/ads/native.dart';
+import 'package:qr_scanner/page/settingpage/faq.dart';
+import 'package:qr_scanner/page/settingpage/privacy_policy.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../const.dart';
 import '../them_provider.dart';
@@ -65,6 +69,7 @@ class _SettingPageState extends State<SettingPage> {
                       right: 16.0,
                       left: 16,
                       top: 10,
+                      bottom: 5
                     ),
                     child: ElevatedButton(
                       style: ButtonStyle(
@@ -272,8 +277,8 @@ class _SettingPageState extends State<SettingPage> {
                             //   ),
                             // ),
                             NativeAdManager(
-                              idNative: '/22486823495/sudoku_native',
-                            ),
+                                idNative: '/22486823495/sudoku_native',
+                                small: true),
                             SizedBox(
                               height: 15,
                             ),
@@ -289,8 +294,10 @@ class _SettingPageState extends State<SettingPage> {
                               padding: const EdgeInsets.only(bottom: 8.0),
                               child: GestureDetector(
                                 onTap: () {
-                                  print('FAQ');
-                                  HapticFeedback.vibrate();
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (ct) {
+                                    return FAQPage();
+                                  }));
                                 },
                                 child: Container(
                                   height: 50,
@@ -317,11 +324,47 @@ class _SettingPageState extends State<SettingPage> {
                                 ),
                               ),
                             ),
+
                             Padding(
                               padding: const EdgeInsets.only(bottom: 8.0),
                               child: GestureDetector(
                                 onTap: () {
-                                  print('Policy');
+                                  launch(
+                                      'mailto:app@netlink.vn?subject=&body=');
+                                },
+                                child: Container(
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    color: grey.withOpacity(0.5),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 12),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'Contacts Us',
+                                          style: textType.copyWith(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.normal),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (ct) {
+                                    return PrivacyPolicy();
+                                  }));
                                 },
                                 child: Container(
                                   height: 50,
@@ -355,7 +398,8 @@ class _SettingPageState extends State<SettingPage> {
                               padding: const EdgeInsets.only(bottom: 8.0),
                               child: GestureDetector(
                                 onTap: () {
-                                  print('Share');
+                                  Share.share(
+                                      'https://play.google.com/store/apps/details?id=com.netlink.qr_scanner');
                                 },
                                 child: Container(
                                   height: 50,

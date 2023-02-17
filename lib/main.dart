@@ -104,7 +104,11 @@ class _SplashState extends State<Splash> {
             child: CircularProgressIndicator(
               color: blue,
             ),
-          )
+          ),
+           Text(
+            'Showing ads...',
+            style: textType.copyWith(fontWeight: FontWeight.normal, fontSize: 18),
+          ),
         ],
       )),
     );

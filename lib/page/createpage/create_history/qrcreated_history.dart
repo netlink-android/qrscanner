@@ -56,7 +56,7 @@ class _QrCreatedHistoryState extends State<QrCreatedHistory> {
           if (_dtFilter.typeicon == _listFilter[i]) {
             qrCustomModel.add(_dtFilter);
           }
-        }
+        } 
       }
     }
   }
@@ -120,7 +120,7 @@ class _QrCreatedHistoryState extends State<QrCreatedHistory> {
                   // ],
                 ),
                 height:
-                    _isFilter ? MediaQuery.of(context).size.height * 0.7 : 0,
+                    _isFilter ? MediaQuery.of(context).size.height * 0.55 : 0,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 12, right: 12),
                   child: ListView.builder(
