@@ -50,6 +50,7 @@ class _LocationPageState extends State<LocationPage> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: TextField(
+                    keyboardType: TextInputType.phone,
                     controller: textLatitude,
                     decoration: InputDecoration(
                       prefixIcon: Icon(
@@ -83,6 +84,7 @@ class _LocationPageState extends State<LocationPage> {
                     ),
                     child: TextField(
                       controller: textLongitude,
+                      keyboardType: TextInputType.phone,
                       decoration: InputDecoration(
                         prefixIcon: Icon(
                           Icons.location_on_outlined,
@@ -136,8 +138,10 @@ class _LocationPageState extends State<LocationPage> {
                               titleType: 'Location',
                               data:
                                   'https://maps.google.com/local?q=$longitude,$latitude',
-                              type: 'Latitude: $latitude' + ' - ' + 'Longitude: $longitude',
-                               typeicon: 'assets/iconcustom/location.png',
+                              type: 'Latitude: $latitude' +
+                                  ' - ' +
+                                  'Longitude: $longitude',
+                              typeicon: 'assets/iconcustom/location.png',
                             ),
                           ),
                         );
