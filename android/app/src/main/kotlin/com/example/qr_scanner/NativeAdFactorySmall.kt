@@ -31,12 +31,12 @@ internal class NativeAdFactorySmall(context: Context) : GoogleMobileAdsPlugin.Na
             .findViewById(R.id.native_ad_attribution_small)
         attributionViewSmall.setVisibility(View.VISIBLE)
         // icon
-        nativeAdView.setIconView(nativeAdView.findViewById(R.id.native_ad_icon))
-        if (nativeAd.getIcon() == null) {
-            nativeAdView.getIconView().setVisibility(View.GONE)
+        nativeAdView?.setIconView(nativeAdView.findViewById(R.id.native_ad_icon))
+        if (nativeAd?.getIcon() == null) {
+            nativeAdView.getIconView()?.setVisibility(View.GONE)
         } else {
-            (nativeAdView.getIconView() as ImageView).setImageDrawable(
-                nativeAd.getIcon().getDrawable()
+            (nativeAdView?.getIconView() as ImageView).setImageDrawable(
+                nativeAd.getIcon()?.getDrawable()
             )
         }
 
@@ -46,45 +46,46 @@ internal class NativeAdFactorySmall(context: Context) : GoogleMobileAdsPlugin.Na
 //        nativeAdView.setMediaView(mediaView);
 
 // button
-        nativeAdView.setCallToActionView(nativeAdView.findViewById(R.id.native_ad_button))
-        if (nativeAd.getCallToAction() == null) {
-            nativeAdView.getCallToActionView().setVisibility(View.INVISIBLE)
+        nativeAdView?.setCallToActionView(nativeAdView.findViewById(R.id.native_ad_button))
+        if (nativeAd?.getCallToAction() == null) {
+            nativeAdView.getCallToActionView()?.setVisibility(View.INVISIBLE)
         } else {
-            (nativeAdView.getCallToActionView() as Button).setText(nativeAd.getCallToAction())
+            (nativeAdView?.getCallToActionView() as Button).setText(nativeAd.getCallToAction())
         }
 
 //   headline
-        nativeAdView.setHeadlineView(nativeAdView.findViewById(R.id.native_ad_headline))
-        (nativeAdView.getHeadlineView() as TextView).setText(nativeAd.getHeadline())
+        nativeAdView?.setHeadlineView(nativeAdView.findViewById(R.id.native_ad_headline))
+        (nativeAdView?.getHeadlineView() as TextView).setText(nativeAd.getHeadline())
 
 //  bodyView
-        nativeAdView.setBodyView(nativeAdView.findViewById(R.id.native_ad_body))
-        if (nativeAd.getBody() == null) {
-            nativeAdView.getBodyView().setVisibility(View.INVISIBLE)
+        nativeAdView?.setBodyView(nativeAdView.findViewById(R.id.native_ad_body))
+        if (nativeAd?.getBody() == null) {
+            nativeAdView.getBodyView()?.setVisibility(View.INVISIBLE)
         } else {
-            (nativeAdView.getBodyView() as TextView).setText(nativeAd.getBody())
-            nativeAdView.getBodyView().setVisibility(View.VISIBLE)
+            (nativeAdView?.getBodyView() as TextView).setText(nativeAd.getBody())
+            nativeAdView.getBodyView()?.setVisibility(View.VISIBLE)
         }
 
 //    advertiser name
-        nativeAdView.setAdvertiserView(nativeAdView.findViewById(R.id.native_ad_advertiser))
-        if (nativeAd.getAdvertiser() == null) {
-            nativeAdView.getAdvertiserView().setVisibility(View.GONE)
+        nativeAdView?.setAdvertiserView(nativeAdView.findViewById(R.id.native_ad_advertiser))
+        if (nativeAd?.getAdvertiser() == null) {
+            nativeAdView.getAdvertiserView()?.setVisibility(View.GONE)
         } else {
-            (nativeAdView.getAdvertiserView() as TextView).setText(nativeAd.getAdvertiser())
-            nativeAdView.getAdvertiserView().setVisibility(View.VISIBLE)
+            (nativeAdView?.getAdvertiserView() as TextView).setText(nativeAd.getAdvertiser())
+            nativeAdView.getAdvertiserView()?.setVisibility(View.VISIBLE)
         }
         //   ratingbar
-        nativeAdView.setStarRatingView(nativeAdView.findViewById(R.id.native_ad_rating))
-        if (nativeAd.getStarRating() == null) {
-            nativeAdView.getStarRatingView().setVisibility(View.INVISIBLE)
+        nativeAdView?.setStarRatingView(nativeAdView.findViewById(R.id.native_ad_rating))
+        if (nativeAd?.getStarRating() == null) {
+            nativeAdView.getStarRatingView()?.setVisibility(View.INVISIBLE)
         } else {
-            (nativeAdView.getStarRatingView() as RatingBar).setRating(
-                nativeAd.getStarRating().toFloat()
+            val star: String = nativeAd.getStarRating()?.toString() as String
+            (nativeAdView?.getStarRatingView() as RatingBar).setRating(
+                star.toFloat()
             )
-            nativeAdView.getStarRatingView().setVisibility(View.VISIBLE)
+            nativeAdView.getStarRatingView()?.setVisibility(View.VISIBLE)
         }
-        nativeAdView.setNativeAd(nativeAd)
+        nativeAdView?.setNativeAd(nativeAd)
         return nativeAdView
     }
 }

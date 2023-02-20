@@ -80,7 +80,7 @@ class _NativeAdManagerState extends State<NativeAdManager> {
     return isNativeAdLoaded
         ? SizedBox(
             width: double.infinity,
-            height: widget.small ? 170 : 250,
+            height: widget.small ? 170 : 260,
             child: Container(
               child: AdWidget(
                 ad: nativeAd!,

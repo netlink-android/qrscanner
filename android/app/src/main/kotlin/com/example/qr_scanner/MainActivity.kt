@@ -10,13 +10,13 @@ class MainActivity : FlutterActivity() {
         super.configureFlutterEngine(flutterEngine)
         GoogleMobileAdsPlugin.registerNativeAdFactory(
             flutterEngine, "listTile", NativeAdFactorySmall(context))
-         GoogleMobileAdsPlugin.registerNativeAdFactory(
-             flutterEngine, "listTileMedium",NativeAdFactoryMedium(context))
+          GoogleMobileAdsPlugin.registerNativeAdFactory(
+              flutterEngine, "listTileMedium",NativeAdFactoryMedium(context))
     }
 
     override fun cleanUpFlutterEngine(flutterEngine: FlutterEngine) {
         super.cleanUpFlutterEngine(flutterEngine)
         GoogleMobileAdsPlugin.unregisterNativeAdFactory(flutterEngine, "listTile")
-         GoogleMobileAdsPlugin.unregisterNativeAdFactory(flutterEngine, "listTileMedium")
+          GoogleMobileAdsPlugin.unregisterNativeAdFactory(flutterEngine, "listTileMedium")
     }
 }
